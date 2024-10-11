@@ -1,0 +1,14 @@
+transformers
+torch
+langchain==0.1.20
+langchain_community
+chainlit
+accelerate
+sentence-transformers
+llama-index 
+llama-index-embeddings-ollama
+llama-index-llms-ollama
+python-dotenv
+PyPDF2
+faiss-cpu
+chromadb==0.3.29

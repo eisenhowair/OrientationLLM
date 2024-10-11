@@ -1,0 +1,14 @@
+lib64
+elastic_search_info.txt
+__pycache__
+.chainlit
+.files
+.env
+.vscode
+tools
+sandboxRAG/differents_textes/moodle
+vectorstores/
+chainlit.md
+data
+config
+ProjetLLM/
