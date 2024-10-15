@@ -6,7 +6,7 @@ from langchain.schema.runnable.config import RunnableConfig
 
 import chainlit as cl
 
-model = Ollama(base_url="http://localhost:11434", model="llama3:8b")
+model = Ollama(base_url="http://localhost:11434", model="llama3:instruct")
 
 
 @cl.on_chat_start
