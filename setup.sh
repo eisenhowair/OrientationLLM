@@ -8,6 +8,7 @@ sudo dpkg --configure -a
 
 # Installation de python3.8-venv
 sudo apt install python3.8-venv -y
+sudo apt-get install python3-dev -y
 
 # Téléchargement et installation de Ollama
 curl -fsSL https://ollama.com/install.sh | sh
@@ -18,4 +19,4 @@ ollama pull llama3:instruct
 python3 -m venv ProjetLLM
 
 # Instructions pour l'utilisateur sur comment activer l'environnement
-echo "Utilise la commande 'source ProjetLLM/bin/activate' avant de lancer 'setup_env' pour activer l'environnement virtuel."
+echo "Utilise la commande 'source ProjetLLM/bin/activate' avant de lancer 'bash setup_env.sh' pour activer l'environnement virtuel."

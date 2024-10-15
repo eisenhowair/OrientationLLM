@@ -1,3 +1,5 @@
+setuptools
+wheel
 transformers
 torch
 langchain==0.1.20
