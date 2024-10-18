@@ -1,11 +1,25 @@
 from langchain_community.llms import Ollama
-from langchain.prompts import ChatPromptTemplate
+from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.schema import StrOutputParser
 from langchain.schema.runnable import Runnable, RunnablePassthrough
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.input_widget import TextInput, Select
 from prompt_warehouse import *
 import chainlit as cl
+from chainlit.types import ThreadDict
+
+from langchain.memory import ConversationBufferMemory
+
+
+@cl.password_auth_callback
+def auth_callback(username: str, password: str):
+    if (username, password) == ("elias", "elias"):
+        return cl.User(
+            identifier="Elias", metadata={"role": "admin", "provider": "credentials"}
+        )
+    else:
+        return None
+
 
 model = Ollama(base_url="http://localhost:11434", model="llama3:instruct")
 
@@ -31,6 +45,8 @@ async def on_chat_start():
     ).send()
     formation_lvl = settings["formation_lvl"]
     print(formation_lvl)
+    cl.user_session.set(
+        "memory", ConversationBufferMemory(return_messages=True))
 
 
 @cl.on_settings_update
@@ -41,7 +57,6 @@ async def setup_agent(settings):
         cl.user_session.set("formation", settings["formation_lvl"])
     if settings["domaine"] is not None:
         cl.user_session.set("domaine", settings["domaine"])
-
 
 
 def setup_model(domaine, formation):
@@ -71,11 +86,12 @@ def setup_model(domaine, formation):
         specific_message = "Ton rôle est de conseiller l'utilisateur sur son avenir."
     system_message=""
     # Construire le prompt
-    specific_message = claude_reworked
+    specific_message = one_shot_CoT_Role
     prompt_exercice = ChatPromptTemplate.from_messages(
         [
             ("system", f"{system_message} {specific_message}"),
-            ("human", "{question}")
+            MessagesPlaceholder(variable_name="history")
+            #("human", "{question}")
         ]
     )
 
@@ -98,6 +114,7 @@ async def on_message(message: cl.Message):
     """
     formation = cl.user_session.get("formation")
     domaine = cl.user_session.get("domaine")
+    memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
 
     setup_model(domaine=domaine,formation=formation)
     runnable = cl.user_session.get("runnable")  # type: Runnable
@@ -109,5 +126,46 @@ async def on_message(message: cl.Message):
     ):
         await msg.stream_token(chunk)
     await msg.send()
+
+    # on ajoute les messages à la mémoire
+    memory.chat_memory.add_user_message(message.content)
+    memory.chat_memory.add_ai_message(msg.content)
+
     print(message.content)
   
+
+@cl.on_chat_resume
+async def on_chat_resume(thread: ThreadDict):
+    memory = ConversationBufferMemory(return_messages=True)
+    root_messages = [m for m in thread["steps"] if m["parentId"] == None]
+    for message in root_messages:
+        if message["type"] == "user_message":
+            memory.chat_memory.add_user_message(message["output"])
+        else:
+            memory.chat_memory.add_ai_message(message["output"])
+
+    cl.user_session.set("memory", memory)
+
+    await cl.ChatSettings(
+        [
+            TextInput(id="formation_lvl", label="Post-"),
+            Select(
+                id="domaine",
+                label="Domaine d'études de recherche",
+                values=[
+                    "",
+                    "Informatique",
+                    "Sports",
+                    "Littérature",
+                    "Chimie",
+                ],
+                initial_index=0,
+            ),
+        ]
+    ).send()
+
+
+    formation = cl.user_session.get("formation")
+    domaine = cl.user_session.get("domaine")
+
+    setup_model(domaine=domaine,formation=formation)
