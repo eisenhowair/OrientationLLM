@@ -4,7 +4,7 @@ from langchain.schema import StrOutputParser
 from langchain.schema.runnable import Runnable, RunnablePassthrough
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.input_widget import TextInput, Select
-
+from prompt_warehouse import *
 import chainlit as cl
 
 model = Ollama(base_url="http://localhost:11434", model="llama3:instruct")
@@ -56,7 +56,7 @@ def setup_model(domaine, formation):
         None : Met à jour la session utilisateur avec le nouveau Runnable pour discuter.
     """
     # Message système de base
-    system_message = "Tu parles uniquement français."
+    system_message = "Tu es un conseiller d'orientation qui parle uniquement français."
 
     # Initialiser le message spécifique
     specific_message = ""
@@ -68,10 +68,10 @@ def setup_model(domaine, formation):
     elif formation:
         specific_message = f"L'utilisateur sort de la formation {formation}."
     else:
-        specific_message = "Ton rôle est de conseiller l'utilisateur sans information spécifique."
+        specific_message = "Ton rôle est de conseiller l'utilisateur sur son avenir."
     system_message=""
-    specific_message = "You are an expert in Web development, including CSS, JavaScript, React, Tailwind, Node.JS and Hugo / Markdown.Don't apologise unnecessarily. Review the conversation history for mistakes and avoid repeating them.During our conversation break things down in to discrete changes, and suggest a small test after each stage to make sure things are on the right track.Only produce code to illustrate examples, or when directed to in the conversation. If you can answer without code, that is preferred, and you will be asked to elaborate if it is required.Request clarification for anything unclear or ambiguous.Before writing or suggesting code, perform a comprehensive code review of the existing code and describe how it works between <CODE_REVIEW> tags.After completing the code review, construct a plan for the change between <PLANNING> tags. Ask for additional source files or documentation that may be relevant. The plan should avoid duplication (DRY principle), and balance maintenance and flexibility. Present trade-offs and implementation choices at this step. Consider available Frameworks and Libraries and suggest their use when relevant. STOP at this step if we have not agreed a plan.Once agreed, produce code between <OUTPUT> tags. Pay attention to Variable Names, Identifiers and String Literals, and check that they are reproduced accurately from the original source files unless otherwise directed. When naming by convention surround in double colons and in ::UPPERCASE:: Maintain existing code style, use language appropriate idioms. Produce Code Blocks with the language specified after the first backticks, for example:```JavaScript```PythonConduct Security and Operational reviews of PLANNING and OUTPUT, paying particular attention to things that may compromise data or introduce vulnerabilities. For sensitive changes (e.g. Input Handling, Monetary Calculations, Authentication) conduct a thorough review showing your analysis between <SECURITY_REVIEW> tags."
     # Construire le prompt
+    specific_message = claude_reworked
     prompt_exercice = ChatPromptTemplate.from_messages(
         [
             ("system", f"{system_message} {specific_message}"),
