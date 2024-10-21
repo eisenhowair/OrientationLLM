@@ -1,12 +1,9 @@
 from langchain_community.llms import Ollama
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.schema import StrOutputParser
-from langchain.schema.runnable import Runnable, RunnablePassthrough
+from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.input_widget import TextInput, Select
 from prompt_warehouse import *
-from langchain.schema.runnable import Runnable, RunnablePassthrough, RunnableLambda
-from operator import itemgetter
+from prepare_prompt import *
 
 import chainlit as cl
 from chainlit.types import ThreadDict
@@ -87,24 +84,8 @@ def setup_model(domaine, formation):
     else:
         specific_message = prompt_no_domain_no_formation
 
-    # Construire le prompt
-    prompt_exercice = ChatPromptTemplate.from_messages(
-        [
-            ("system", f"{specific_message}"),
-            MessagesPlaceholder(variable_name="history")
-            #("human", "{question}"),
-        ]
-    )
 
-    runnable = (
-        RunnablePassthrough.assign(
-            history=RunnableLambda(
-                memory.load_memory_variables) | itemgetter("history")
-        ) 
-        | prompt_exercice
-        | model
-        | StrOutputParser()
-    )
+    runnable = prepare_prompt_few_shot(corps_prompt = specific_message,model = model, memory = memory)
     cl.user_session.set("runnable", runnable)
 
 
@@ -130,7 +111,7 @@ async def on_message(message: cl.Message):
 
     msg = cl.Message(content="")
     async for chunk in runnable.astream(
-        {"question": message.content},
+        {"input": message.content},
         config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
     ):
         await msg.stream_token(chunk)
