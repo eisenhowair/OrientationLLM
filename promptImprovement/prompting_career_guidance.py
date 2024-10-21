@@ -5,6 +5,9 @@ from langchain.schema.runnable import Runnable, RunnablePassthrough
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.input_widget import TextInput, Select
 from prompt_warehouse import *
+from langchain.schema.runnable import Runnable, RunnablePassthrough, RunnableLambda
+from operator import itemgetter
+
 import chainlit as cl
 from chainlit.types import ThreadDict
 
@@ -70,8 +73,7 @@ def setup_model(domaine, formation):
     Returns:
         None : Met à jour la session utilisateur avec le nouveau Runnable pour discuter.
     """
-    # Message système de base
-    system_message = "Tu es un conseiller d'orientation qui parle uniquement français."
+    memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
 
     # Initialiser le message spécifique
     specific_message = ""
@@ -83,19 +85,26 @@ def setup_model(domaine, formation):
     elif formation:
         specific_message = f"L'utilisateur sort de la formation {formation}."
     else:
-        specific_message = "Ton rôle est de conseiller l'utilisateur sur son avenir."
-    system_message=""
+        specific_message = prompt_no_domain_no_formation
+
     # Construire le prompt
-    specific_message = one_shot_CoT_Role
     prompt_exercice = ChatPromptTemplate.from_messages(
         [
-            ("system", f"{system_message} {specific_message}"),
+            ("system", f"{specific_message}"),
             MessagesPlaceholder(variable_name="history")
-            #("human", "{question}")
+            #("human", "{question}"),
         ]
     )
 
-    runnable = prompt_exercice | model | StrOutputParser()
+    runnable = (
+        RunnablePassthrough.assign(
+            history=RunnableLambda(
+                memory.load_memory_variables) | itemgetter("history")
+        ) 
+        | prompt_exercice
+        | model
+        | StrOutputParser()
+    )
     cl.user_session.set("runnable", runnable)
 
 
@@ -131,7 +140,7 @@ async def on_message(message: cl.Message):
     memory.chat_memory.add_user_message(message.content)
     memory.chat_memory.add_ai_message(msg.content)
 
-    print(message.content)
+    print(memory.load_memory_variables)
   
 
 @cl.on_chat_resume
