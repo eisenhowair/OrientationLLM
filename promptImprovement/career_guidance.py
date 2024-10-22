@@ -1,7 +1,7 @@
 from langchain_community.llms import Ollama
 from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
-from chainlit.input_widget import TextInput, Select
+from chainlit.input_widget import TextInput, Select, Tags
 from prompt_warehouse import *
 from prepare_prompt import *
 
@@ -41,6 +41,7 @@ async def on_chat_start():
                 ],
                 initial_index=0,
             ),
+            Tags(id="Label1", label="Label Tag", initial=["Answer:"]),
         ]
     ).send()
     formation_lvl = settings["formation_lvl"]
@@ -117,7 +118,7 @@ async def on_message(message: cl.Message):
     memory.chat_memory.add_user_message(message.content)
     memory.chat_memory.add_ai_message(msg.content)
 
-    print(memory.load_memory_variables)
+    print(memory.load_memory_variables)  # affiche la discussion
 
 
 @cl.on_chat_resume
@@ -147,6 +148,7 @@ async def on_chat_resume(thread: ThreadDict):
                 ],
                 initial_index=0,
             ),
+            Tags(id="Label1", label="Label Tag", initial=["Answer:"]),
         ]
     ).send()
 
