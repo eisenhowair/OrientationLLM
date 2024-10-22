@@ -45,8 +45,7 @@ async def on_chat_start():
     ).send()
     formation_lvl = settings["formation_lvl"]
     print(formation_lvl)
-    cl.user_session.set(
-        "memory", ConversationBufferMemory(return_messages=True))
+    cl.user_session.set("memory", ConversationBufferMemory(return_messages=True))
 
 
 @cl.on_settings_update
@@ -70,7 +69,6 @@ def setup_model(domaine, formation):
     Returns:
         None : Met à jour la session utilisateur avec le nouveau Runnable pour discuter.
     """
-    memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
 
     # Initialiser le message spécifique
     specific_message = ""
@@ -84,10 +82,8 @@ def setup_model(domaine, formation):
     else:
         specific_message = prompt_no_domain_no_formation
 
-
-    runnable = prepare_prompt_few_shot(corps_prompt = specific_message,model = model, memory = memory)
+    runnable = prepare_prompt_few_shot(corps_prompt=specific_message, model=model)
     cl.user_session.set("runnable", runnable)
-
 
 
 @cl.on_message
@@ -106,7 +102,7 @@ async def on_message(message: cl.Message):
     domaine = cl.user_session.get("domaine")
     memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
 
-    setup_model(domaine=domaine,formation=formation)
+    setup_model(domaine=domaine, formation=formation)
     runnable = cl.user_session.get("runnable")  # type: Runnable
 
     msg = cl.Message(content="")
@@ -122,7 +118,7 @@ async def on_message(message: cl.Message):
     memory.chat_memory.add_ai_message(msg.content)
 
     print(memory.load_memory_variables)
-  
+
 
 @cl.on_chat_resume
 async def on_chat_resume(thread: ThreadDict):
@@ -154,8 +150,7 @@ async def on_chat_resume(thread: ThreadDict):
         ]
     ).send()
 
-
     formation = cl.user_session.get("formation")
     domaine = cl.user_session.get("domaine")
 
-    setup_model(domaine=domaine,formation=formation)
+    setup_model(domaine=domaine, formation=formation)
