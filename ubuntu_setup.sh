@@ -19,4 +19,4 @@ ollama pull llama3:instruct
 python3 -m venv ProjetLLM
 
 # Instructions pour l'utilisateur sur comment activer l'environnement
-echo "Utilise la commande 'source ProjetLLM/bin/activate' avant de lancer 'bash setup_env.sh' pour activer l'environnement virtuel."
+echo "Utilise la commande 'source ProjetLLM/bin/activate' avant de lancer 'bash ubuntu_env.sh' pour activer l'environnement virtuel."

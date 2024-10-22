@@ -12,3 +12,4 @@ chainlit.md
 data
 config
 ProjetLLM/
+*.msi
