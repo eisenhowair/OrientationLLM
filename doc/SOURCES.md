@@ -27,14 +27,15 @@ This document lists the sources used in our GitHub research project, categorized
 * **Conversational Prompt Engineering** ([https://www.researchgate.net/publication/382970858_Conversational_Prompt_Engineering](https://www.researchgate.net/publication/382970858_Conversational_Prompt_Engineering))
 
 
-
-
 ### **Code & Tools**
 
 ## General Resources
 
 ### **Articles**
 
+* **What makes a good career counselor** ([https://www.linkedin.com/advice/1/what-key-skills-successful-career-counselor-rqy7c
+](https://www.linkedin.com/advice/1/what-key-skills-successful-career-counselor-rqy7c
+))
 
 ### **Code & Tools**
 
