@@ -20,7 +20,10 @@ from prompt_warehouse import *
 def prepare_prompt_few_shot(corps_prompt, model):
 
     memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
-
+    intro_few_shot = """
+    [EXEMPLES DE CONVERSATIONS PASSÉES]
+Les exemples suivants illustrent le type d'échange attendu. Utilise-les comme référence pour le ton et la structure, sans les confondre avec les nouvelles questions.
+"""
     shots = [
         {"input": FS_human_example_1, "output": FS_model_example_1},
         {"input": FS_human_example_2, "output": FS_model_example_2},
@@ -29,7 +32,7 @@ def prepare_prompt_few_shot(corps_prompt, model):
 
     example_prompt = (
         SystemMessagePromptTemplate.from_template(
-            "Les exemples suivants sont des conseils passés :"
+            intro_few_shot
         )  # pour que le modèle arrive à différencier les examples passés de la discussion actuelle
         + HumanMessagePromptTemplate.from_template("{input}")
         + AIMessagePromptTemplate.from_template("{output}")

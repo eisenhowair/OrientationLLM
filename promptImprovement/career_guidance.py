@@ -81,7 +81,7 @@ def setup_model(domaine, formation):
     elif formation:
         specific_message = f"L'utilisateur sort de la formation {formation}."
     else:
-        specific_message = prompt_no_domain_no_formation
+        specific_message = prompt_no_domain_no_formation_v2
 
     runnable = prepare_prompt_few_shot(corps_prompt=specific_message, model=model)
     cl.user_session.set("runnable", runnable)
