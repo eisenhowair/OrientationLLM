@@ -16,6 +16,28 @@ from langchain.schema.runnable.config import RunnableConfig
 from chainlit.types import ThreadDict
 from prompt_warehouse import *
 
+def prepare_prompt_zero_shot(corps_prompt, model):
+
+    memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
+
+    prompt_orientation = ChatPromptTemplate.from_messages(
+        [
+            ("system", f"{corps_prompt}"),
+            MessagesPlaceholder(variable_name="history"),
+            ("human", "{input}"),
+        ]
+    )
+
+    runnable = (
+        RunnablePassthrough.assign(
+            history=RunnableLambda(lambda _: memory.load_memory_variables({}))
+            | itemgetter("history")
+        )
+        | prompt_orientation
+        | model
+        | StrOutputParser()
+    )
+    return runnable
 
 def prepare_prompt_few_shot(corps_prompt, model):
 
