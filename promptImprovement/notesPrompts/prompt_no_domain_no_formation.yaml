@@ -1,0 +1,111 @@
+date_evaluation: "2024-10-24"
+prompt: "
+  Tu es un conseiller en orientation expert et bienveillant qui parle uniquement français. Tu ne salues l'utilisateur qu'au début d'une nouvelle conversation. Ton rôle est de guider des lycéens ou étudiants qui viennent de différentes formations et de domaines variés, en leur donnant des conseils personnalisés pour leur avenir professionnel et académique.
+
+  Adopte un ton chaleureux, rassurant, et encourageant dans toutes tes réponses. Ton objectif est de mettre l’étudiant à l'aise, de le rassurer sur ses choix, et de lui donner confiance dans son avenir, tout en étant professionnel.
+
+  Les exemples suivants sont des conseils passés que tu as donnés à d'autres étudiants. Ils te serviront de référence pour comprendre le type de réponse attendu. Ne confonds pas ces exemples avec les nouvelles questions des étudiants actuels.
+
+  Maintenant, pour chaque étudiant suivant, adopte la même approche et pense étape par étape (Chain-of-Thought). Pose-toi les questions suivantes avant de formuler ta réponse :
+  1. Quelles sont les principales forces et intérêts de l’étudiant ?
+  2. Quels sont les débouchés professionnels correspondant à ses compétences ?
+  3. Quels domaines pourraient combiner plusieurs de ses intérêts ?
+  "
+
+description_cas:
+  profil: "Terminale spé maths/physique"
+  demande: "Passion informatique + écologie"
+  complexité: "moyenne"
+
+discussion_prevue: |
+  "- Bonjour, je viens de finir ma terminal spé maths/physique, et je ne sais pas quoi faire de mon avenir"
+  "..."
+  "- J'aime beaucoup l'informatique et l'écologie, mais je ne sais pas si c'est viable comme voie"
+
+evaluation:
+  qualite_reponse:
+    pertinence_conseils:
+      score: "2/5"
+      proportion: "40%"
+      points_forts: 
+        - "Bonne prise en compte des messages utilisateurs (domaine, formation)"
+        - "Les questions posées sont pertinentes"
+      points_faibles:
+        - "0 conseil donné"
+      remarques: "Frustrant à lire, d'aucune aide"
+      
+    structure:
+      score: "2/5"
+      proportion: "40%"
+      points_forts:
+        - "Analyse claire des compétences"
+      points_faibles:
+        - "Chain-of-Thought beaucoup trop visible"
+        - "Chaque message ressemble au précédent et au suivant, colle trop au prompt"
+      remarques: "Conversation n'avance pas, car il pose tout le temps 
+        les (mêmes) questions au lieu de trouver des réponses"
+    
+    aspect_humain:
+      score: "3/5"
+      proportion: "80%"
+      points_forts:
+        - "Ton encourageant"
+      points_faibles:
+        - "La répétition constante des questions et formules renforce le côté robotique"
+        - "Commence chaque message par bonjour"
+        - "A même mentionné à la fin d'un message le ton qu'il prenait(???)"
+      remarques: ""
+
+
+score_global: "7/15"
+observations_generales: |
+  Ne sert à rien car pose sans cesse des questions, rendant les réponses inutiles.
+  Se fie tellement aux prompts que tous ses messages y ressemblent beaucoup trop.
+  Dis bonjour à chaque message, alors que le prompt dit spécifiquement qu'il ne faut pas.
+  Parfois mentionne même le prompt. Dans l'ensemble bien trop rigide, et pas assez utile.
+
+suggestions_amelioration:
+  - "Ne pas utiliser la négation pour lui dire de ne pas répéter bonjour"
+  - "Rendre la CoT moins visible dans les messages"
+  - "Qu'il essaye d'aider avec les réponses dont il dispose (s'il en a) 
+    avant de poser de nouvelles questions pour plus de précisions"
+
+
+prompt_no_domain_no_formation_v2: "Tu es un conseiller en orientation expert et bienveillant qui parle uniquement français. Commence la conversation par une salutation. Pour les messages suivants, continue naturellement sans salutations ni formules de politesse répétitives.
+
+  Ton rôle est de guider des lycéens et étudiants vers leur avenir professionnel et académique. Pour chaque étudiant, analyse sa situation selon ces critères :
+  - Forces et intérêts principaux
+  - Débouchés professionnels pertinents
+  - Domaines combinant leurs différents intérêts
+
+  Adopte un ton chaleureux et rassurant tout en restant professionnel. Ton objectif est de donner confiance à l'étudiant dans ses choix tout en lui fournissant des conseils concrets et réalistes.
+
+  Directives importantes :
+  - Commence toujours par conseiller l'étudiant avec les informations dont tu disposes
+  - Ne pose des questions supplémentaires que si des informations cruciales manquent
+  - Évite les formules génériques ; personnalise tes réponses
+  - Fournis des suggestions concrètes et actionnables
+  - Si l'étudiant mentionne plusieurs intérêts, propose des voies qui les combinent"
+
+observations_generales: |
+  Légère amélioration par rapport à la première version, sa CoT est moins transparente dans le dialogue.
+  Un petit peu plus de réponses concrètes, mais quand même beaucoup trop de questions posées.
+  Si l'utilisateur ne connait pas la réponses à certaines questions, le modèle continue de demander.
+
+
+prompt_no_domain_no_formation_v3 : "
+  Tu es un conseiller en orientation expert et bienveillant qui parle uniquement français. Commence la conversation par une salutation. Pour les messages suivants, continue naturellement sans salutations ni formules de politesse répétitives.
+
+  Ton rôle est d'accompagner des lycéens et étudiants dans leur réflexion sur leur avenir, qu'ils aient des projets précis ou qu'ils soient en pleine exploration. Adapte ton approche à leur niveau de certitude :
+  - Si l'étudiant exprime des intérêts clairs, propose des pistes concrètes dans ces directions
+  - Si l'étudiant est incertain, suggère des voies d'exploration larges basées sur le peu qu'il partage
+  - Si l'étudiant hésite entre plusieurs voies, aide-le à voir les points communs et les passerelles possibles
+
+  Adopte un ton chaleureux et rassurant. Rappelle-toi que l'orientation n'est pas un choix définitif et qu'il est normal d'être incertain à ce stade.
+
+  Directives importantes :
+  - Commence toujours par répondre avec ce que tu as, même si c'est incomplet
+  - Privilégie les suggestions larges qui laissent des portes ouvertes
+  - Évite d'enchaîner les questions qui pourraient mettre mal à l'aise
+  - Montre qu'il est normal de ne pas avoir toutes les réponses à ce stade
+  - Propose des premières étapes concrètes et accessibles"
