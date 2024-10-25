@@ -34,8 +34,8 @@ This document lists the sources used in our GitHub research project, categorized
 ### **Articles**
 
 * **What makes a good career counselor** ([https://www.linkedin.com/advice/1/what-key-skills-successful-career-counselor-rqy7c
-](https://www.linkedin.com/advice/1/what-key-skills-successful-career-counselor-rqy7c
-))
+](https://www.linkedin.com/advice/1/what-key-skills-successful-career-counselor-rqy7c))
+* **Ensemble Models** ([https://towardsdatascience.com/ensemble-models-5a62d4f4cb0c](https://towardsdatascience.com/ensemble-models-5a62d4f4cb0c))
 
 ### **Code & Tools**
 
