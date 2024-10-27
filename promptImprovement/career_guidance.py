@@ -9,6 +9,7 @@ import chainlit as cl
 from chainlit.types import ThreadDict
 
 from langchain.memory import ConversationBufferMemory
+from typing import List, Dict, Optional
 
 
 @cl.password_auth_callback
@@ -123,7 +124,13 @@ def setup_model(domaine, formation, nom_model):
     else:
         specific_message = prompt_no_domain_no_formation_v3
 
-    model = Ollama(base_url="http://localhost:11434", model=nom_model)
+    model = Ollama(
+        base_url="http://localhost:11434",
+        model=nom_model,
+        cache=True,
+        num_ctx=32768,
+        repeat_penalty=1.3,
+    )
     runnable = prepare_prompt_zero_shot(corps_prompt=specific_message, model=model)
     cl.user_session.set("runnable", runnable)
 

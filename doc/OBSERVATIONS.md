@@ -15,3 +15,8 @@ rapport à la salutation fait que le modèle gère lui-même, et répète moins 
 
 prompt_no_domain_no_formation_v3 a quand du mal à proposer des solutions, et reste dans l'enchainement question-> question,
 alors que les questions n'ont pas d'intérêt (beaucoup trop précises)
+
+
+Après mise en place de l'ensemble de modèles, les comparaisons sont plus faciles. Ainsi, nemotron-mini:q4-instruct est MAUVAIS, répondant hors sujet, ou répétant des indications du prompt ("AI:"). Le modèle llama3:instruct fait souvent des fautes d'orthographes.
+
+Pour l'instant les modèles llama3.1 et 3.2 semblent se démarquer (les comparaisons sont réalisées en 0 shot pour l'instant)

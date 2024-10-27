@@ -13,3 +13,4 @@ data
 config
 ProjetLLM/
 *.msi
+ollama_logs/
