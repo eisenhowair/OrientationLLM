@@ -17,6 +17,10 @@ prompt_no_domain_no_formation_v3 a quand du mal à proposer des solutions, et re
 alors que les questions n'ont pas d'intérêt (beaucoup trop précises)
 
 
-Après mise en place de l'ensemble de modèles, les comparaisons sont plus faciles. Ainsi, nemotron-mini:q4-instruct est MAUVAIS, répondant hors sujet, ou répétant des indications du prompt ("AI:"). Le modèle llama3:instruct fait souvent des fautes d'orthographes.
+Après mise en place de l'ensemble de modèles, les comparaisons sont plus faciles. Ainsi, les modèles nemotron sont MAUVAIS, répondant hors sujet, ou répétant des indications du prompt ("AI:"), parfois même répondant en anglais. Le modèle llama3:instruct fait souvent des fautes d'orthographes.
+
+A première observation, les modèles llama semblent mieux réagir au 0 shot qu'au Few-shot, mais peut-être est-ce dû à une implémentation pas assez bonne des shots.
 
 Pour l'instant les modèles llama3.1 et 3.2 semblent se démarquer (les comparaisons sont réalisées en 0 shot pour l'instant)
+
+Les modèles mistral-small et mistral-nemo sont tous 2 trop lourd, ne présentant pas de version Ollama sous 5, voire 8 Gb
