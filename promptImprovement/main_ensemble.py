@@ -117,7 +117,7 @@ def setup_single_model(
         repeat_penalty=1.3,
     )
     specific_message = generate_specific_message(domaine, formation)
-    runnable = prepare_prompt_zero_shot(corps_prompt=specific_message, model=model)
+    runnable = prepare_prompt_few_shot(corps_prompt=specific_message, model=model)
     cl.user_session.set("runnable", runnable)
 
 

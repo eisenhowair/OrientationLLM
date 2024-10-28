@@ -131,7 +131,7 @@ def setup_model(domaine, formation, nom_model):
         num_ctx=32768,
         repeat_penalty=1.3,
     )
-    runnable = prepare_prompt_zero_shot(corps_prompt=specific_message, model=model)
+    runnable = prepare_prompt_few_shot(corps_prompt=specific_message, model=model)
     cl.user_session.set("runnable", runnable)
 
 
