@@ -15,3 +15,31 @@ rapport à la salutation fait que le modèle gère lui-même, et répète moins 
 
 prompt_no_domain_no_formation_v3 a quand du mal à proposer des solutions, et reste dans l'enchainement question-> question,
 alors que les questions n'ont pas d'intérêt (beaucoup trop précises)
+
+
+Après mise en place de l'ensemble de modèles, les comparaisons sont plus faciles. Ainsi, les modèles nemotron sont MAUVAIS, répondant hors sujet, ou répétant des indications du prompt ("AI:"), parfois même répondant en anglais. Le modèle llama3:instruct fait souvent des fautes d'orthographes.
+
+A première observation, les modèles llama semblent mieux réagir au 0 shot qu'au Few-shot, mais peut-être est-ce dû à une implémentation pas assez bonne des shots.
+
+Pour l'instant les modèles llama3.1 et 3.2 semblent se démarquer (les comparaisons sont réalisées en 0 shot pour l'instant)
+
+Les modèles mistral-small et mistral-nemo sont tous 2 trop lourd, ne présentant pas de version Ollama sous 5, voire 8 Gb
+
+
+
+### Modèles essayés:
+- nemotron-mini
+- nemotron-mini:4b-instruct-q5_0
+- llama3:instruct
+- llama3.1:8b-instruct-q4_1
+- qwen-2.5:3b-instruct
+- llama-3.2-1B-Instruct
+- TinyLlama-1.1B-Chat-v1.0
+- llama3.1-minitron-4b-nvidia
+
+### Modèles pas essayés faute de puissance/espace:
+- mistral-small
+- mistral-nemo
+
+
+Sur tous ces modèles essayés, seuls llama3.1, 3.2 semblent constamment bon. Les tests ont été fait en 0 shot, pour pas que la qualité des shots influent (certains modèles essayés avaient du mal avec les shots en Few-Shot, peut-être à cause de la manière dont ils sont formattés (à creuser))
