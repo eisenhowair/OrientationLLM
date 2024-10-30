@@ -24,3 +24,22 @@ A première observation, les modèles llama semblent mieux réagir au 0 shot qu'
 Pour l'instant les modèles llama3.1 et 3.2 semblent se démarquer (les comparaisons sont réalisées en 0 shot pour l'instant)
 
 Les modèles mistral-small et mistral-nemo sont tous 2 trop lourd, ne présentant pas de version Ollama sous 5, voire 8 Gb
+
+
+
+### Modèles essayés:
+- nemotron-mini
+- nemotron-mini:4b-instruct-q5_0
+- llama3:instruct
+- llama3.1:8b-instruct-q4_1
+- qwen-2.5:3b-instruct
+- llama-3.2-1B-Instruct
+- TinyLlama-1.1B-Chat-v1.0
+- llama3.1-minitron-4b-nvidia
+
+### Modèles pas essayés faute de puissance/espace:
+- mistral-small
+- mistral-nemo
+
+
+Sur tous ces modèles essayés, seuls llama3.1, 3.2 semblent constamment bon. Les tests ont été fait en 0 shot, pour pas que la qualité des shots influent (certains modèles essayés avaient du mal avec les shots en Few-Shot, peut-être à cause de la manière dont ils sont formattés (à creuser))

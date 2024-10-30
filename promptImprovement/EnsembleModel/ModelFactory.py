@@ -211,11 +211,11 @@ class HuggingFaceModel(BaseLanguageModel):
         }
 
     def prepare_for_ensemble(self) -> Runnable:
-        from prepare_prompt import prepare_prompt_zero_shot
+        from prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
 
         model = self.get_model()
 
-        return prepare_prompt_zero_shot(model=model)
+        return prepare_prompt_few_shot(model=model)
 
 
 class ModelFactory:

@@ -14,3 +14,4 @@ config
 ProjetLLM/
 *.msi
 ollama_logs/
+offload
