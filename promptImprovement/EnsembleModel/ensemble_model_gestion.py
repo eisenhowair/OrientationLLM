@@ -7,6 +7,20 @@ from langchain.schema.runnable import Runnable, RunnableParallel
 import chainlit as cl
 from ModelFactory import ModelFactory, BaseLanguageModel
 from prompt_warehouse import *
+from langchain.schema.runnable.config import RunnableConfig
+
+""" trop lourd, trop lent (30 minutes pour une question minimum)
+# LLaMA 3.1 Minitron 4B (NVIDIA)
+            "llama3.1-minitron-4b-nvidia": {
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "nvidia/Llama-3.1-Minitron-4B-Width-Base",
+                    "params": {"trust_remote_code": True},
+                },
+            },
+"""
+
 
 class EnsembleModelManager:
     def __init__(self):
@@ -21,7 +35,7 @@ class EnsembleModelManager:
                 },
             },
             # Qwen-2.5 Chat
-            "qwen-2.5-chat": {
+            "qwen-2.5:3b-instruct": {
                 "weight": 1.0,
                 "config": {
                     "model_type": "ollama",
@@ -34,25 +48,19 @@ class EnsembleModelManager:
                 "config": {
                     "model_type": "huggingface",
                     "model_name": "meta-llama/Llama-3.2-1B-Instruct",
-                    "params": {"load_in_8bit": True},  # Exemple de param spécifique
+                    "params": {
+                        "trust_remote_code": True,
+                    },  # Exemple de param spécifique
                 },
             },
-            # Mistral 7B
-            "mistral-7b": {
+            "TinyLlama-1.1B-Chat-v1.0": {
                 "weight": 1.0,
                 "config": {
                     "model_type": "huggingface",
-                    "model_name": "mistral-7b",
-                    "params": {"load_in_8bit": True},
-                },
-            },
-            # LLaMA 3.1 Minitron 4B (NVIDIA)
-            "llama3.1-minitron-4b-nvidia": {
-                "weight": 1.0,
-                "config": {
-                    "model_type": "huggingface",
-                    "model_name": "nvidia/llama3.1-minitron-4b",
-                    "params": {"load_in_8bit": True},
+                    "model_name": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+                    "params": {
+                        "trust_remote_code": True,
+                    },  # Exemple de param spécifique
                 },
             },
         }
@@ -136,6 +144,17 @@ class EnsembleModelManager:
         Returns:
             Dictionnaire contenant des statistiques sur les réponses
         """
+
+        # Si responses est une seule chaîne
+        if isinstance(responses, str):
+            # Convertir en liste avec un seul élément
+            responses = [responses]
+        # Si c'est déjà un dictionnaire
+        elif isinstance(responses, dict):
+            responses = list(responses.values())
+        else:
+            responses = list(responses)
+
         if len(responses) <= 1:
             return {"consensus_level": 1.0}
 
@@ -193,6 +212,7 @@ class EnsembleModelManager:
         for model_name in self.active_models:
             config = self.available_models[model_name]["config"]
             self.model_instances[model_name] = ModelFactory.create_model(config)
+            print(f"==> {model_name} activé")
 
     def create_ensemble_runnable(
         self,
@@ -220,7 +240,7 @@ class EnsembleModelManager:
 
         async for chunk in runnable.astream(
             {"input": message.content},
-            config=cl.RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
+            config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
         ):
             await msg.stream_token(chunk)
 

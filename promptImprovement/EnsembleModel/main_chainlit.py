@@ -1,4 +1,4 @@
-from langchain_community.llms import Ollama
+from langchain_ollama.llms import OllamaLLM
 from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.input_widget import TextInput, Select
@@ -12,6 +12,7 @@ from ensemble_model_gestion import EnsembleModelManager
 from typing import List, Dict, Optional
 
 # Pour ajouter un modèle: le rajouter dans les available model de ensemble_model_gestion.py
+
 
 @cl.password_auth_callback
 def auth_callback(username: str, password: str):
@@ -44,7 +45,7 @@ async def on_chat_start():
                 id="use_ensemble",
                 label="Mode de fonctionnement",
                 values=["Single Model", "Ensemble Model"],
-                initial_index=0,
+                initial_index=1,
             ),
             Select(
                 id="model_choice",
@@ -77,7 +78,10 @@ async def setup_agent(settings):
             cl.user_session.set(key, settings[key])
 
     if changes_made:
-        cl.user_session.set("corps_prompt",generate_specific_message(settings["domaine"], settings["formation_lvl"]))
+        cl.user_session.set(
+            "corps_prompt",
+            generate_specific_message(settings["domaine"], settings["formation_lvl"]),
+        )
         new_old_settings = {key: settings[key] for key in old_settings.keys()}
         cl.user_session.set("old_settings", new_old_settings)
 
@@ -104,7 +108,7 @@ async def setup_agent(settings):
 def setup_single_model(
     domaine: Optional[str], formation: Optional[str], model_name: str
 ):
-    model = Ollama(
+    model = OllamaLLM(
         base_url="http://localhost:11434",
         model=model_name,
         cache=True,
@@ -112,7 +116,7 @@ def setup_single_model(
         repeat_penalty=1.3,
     )
     specific_message = generate_specific_message(domaine, formation)
-    cl.user_session.set("corps_prompt",specific_message)
+    cl.user_session.set("corps_prompt", specific_message)
     runnable = prepare_prompt_few_shot(model=model)
     cl.user_session.set("runnable", runnable)
 
