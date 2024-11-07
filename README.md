@@ -6,3 +6,5 @@ Développement d'une intelligence artificielle pour l'orientation des étudiants
 ## Prévoir la manière dont la conversation se passera
 
 ## Mettre en place la récupération de données pour enrichir le modèle choisi
+
+##
