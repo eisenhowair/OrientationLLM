@@ -95,7 +95,9 @@ async def setup_agent(settings):
                 list(ensemble_manager.available_models.keys())
             )
             runnable = ensemble_manager.create_ensemble_runnable(
-                domaine=settings["domaine"], formation=settings["formation_lvl"]
+                domaine=settings["domaine"],
+                formation=settings["formation_lvl"],
+                use_few_shot=False,
             )
             cl.user_session.set("runnable", runnable)
         else:

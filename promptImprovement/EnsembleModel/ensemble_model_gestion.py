@@ -63,6 +63,16 @@ class EnsembleModelManager:
                     },  # Exemple de param spécifique
                 },
             },
+            "SmolLM2-1.7B-Instruct": {
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+                    "params": {
+                        "trust_remote_code": True,
+                    },  # Exemple de param spécifique
+                },
+            },
         }
         self.active_models: List[str] = []
         self.model_instances: Dict[str, BaseLanguageModel] = {}
@@ -180,7 +190,7 @@ class EnsembleModelManager:
             if score < avg_similarity - np.std(similarity_scores)
         ]
 
-        return {
+        result = {
             "consensus_level": float(avg_similarity),
             "num_outliers": len(outliers),
             "outlier_models": outliers,
@@ -188,6 +198,11 @@ class EnsembleModelManager:
                 np.min(similarity_matrix[similarity_matrix != 1.0])
             ),
         }
+
+        if not outliers:
+            del result["num_outliers"]
+
+        return result
 
     def _generate_prompt(self, domaine: Optional[str], formation: Optional[str]) -> str:
         """
@@ -226,7 +241,7 @@ class EnsembleModelManager:
         model_runnables = {}
         for model_name in self.active_models:
             model_instance = self.model_instances[model_name]
-            model_runnable = model_instance.prepare_for_ensemble()
+            model_runnable = model_instance.prepare_for_ensemble(few_shot=use_few_shot)
             model_runnables[model_name] = model_runnable
 
         parallel_runnable = RunnableParallel(model_runnables)
@@ -250,7 +265,7 @@ class EnsembleModelManager:
             stats_msg = (
                 f"\n\nStatistiques de l'ensemble:\n"
                 f"- Niveau de consensus: {stats['consensus_level']:.2f}\n"
-                f"- Nombre de modèles divergents: {stats['num_outliers']}"
+                # f"- Nombre de modèles divergents: {stats['num_outliers']}"
             )
             await cl.Message(content=stats_msg).send()
 

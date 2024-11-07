@@ -55,7 +55,7 @@ class BaseLanguageModel(ABC):
         pass
 
     @abstractmethod
-    def prepare_for_ensemble(self) -> Runnable:
+    def prepare_for_ensemble(self, few_shot) -> Runnable:
         """Prépare le modèle pour une utilisation dans l'ensemble."""
         pass
 
@@ -81,11 +81,16 @@ class OllamaModel(BaseLanguageModel):
             **self.params,
         }
 
-    def prepare_for_ensemble(self) -> Runnable:
-        from prepare_prompt import prepare_prompt_zero_shot
+    def prepare_for_ensemble(self, few_shot) -> Runnable:
+        from prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
 
         model = self.get_model()
-        return prepare_prompt_zero_shot(model=model)
+
+        return (
+            prepare_prompt_few_shot(model=model)
+            if few_shot
+            else prepare_prompt_zero_shot(model=model)
+        )
 
 
 class HuggingFaceModel(BaseLanguageModel):
@@ -210,12 +215,16 @@ class HuggingFaceModel(BaseLanguageModel):
             **self.params,
         }
 
-    def prepare_for_ensemble(self) -> Runnable:
+    def prepare_for_ensemble(self, few_shot) -> Runnable:
         from prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
 
         model = self.get_model()
 
-        return prepare_prompt_few_shot(model=model)
+        return (
+            prepare_prompt_few_shot(model=model)
+            if few_shot
+            else prepare_prompt_zero_shot(model=model)
+        )
 
 
 class ModelFactory:
