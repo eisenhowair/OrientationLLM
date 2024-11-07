@@ -119,8 +119,8 @@ def setup_single_model(
     )
     specific_message = generate_specific_message(domaine, formation)
     cl.user_session.set("corps_prompt", specific_message)
-    runnable = prepare_prompt_few_shot(model=model)
-    cl.user_session.set("runnable", runnable)
+    # runnable = prepare_prompt_few_shot(model=model)
+    # cl.user_session.set("runnable", runnable)
 
 
 def generate_specific_message(domaine: Optional[str], formation: Optional[str]) -> str:
