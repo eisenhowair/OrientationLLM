@@ -124,14 +124,14 @@ class HuggingFaceModel(BaseLanguageModel):
                 model = self._load_model_with_quantization()
         except Exception as e:
             print(f"Erreur lors du chargement du modèle: {e}")
-            print("Tentative de chargement en mode sécurisé...")
+            print(f"Tentative de chargement de {self.model_name} en mode sécurisé...")
             model = self._load_model_safe()
 
         pipe = pipeline(
             "text-generation",
             model=model,
             tokenizer=tokenizer,
-            streamer=CustomTextStreamer(tokenizer, timeout=5000),
+            streamer=CustomTextStreamer(tokenizer, timeout=9000),
             max_new_tokens=1024,
             trust_remote_code=True,
             device_map="auto",
@@ -183,7 +183,7 @@ class HuggingFaceModel(BaseLanguageModel):
 
     def _load_model_with_quantization(self):
         """Tente de charger le modèle avec quantification (pour non-Windows)"""
-        print("Tentative de chargement avec quantification...")
+        print(f"Tentative de chargement de {self.model_name} avec quantification...")
         config_8bit = BitsAndBytesConfig(
             load_in_8bit=True,
             llm_int8_threshold=6.0,

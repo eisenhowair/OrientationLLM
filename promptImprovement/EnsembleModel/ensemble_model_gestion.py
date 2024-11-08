@@ -34,7 +34,6 @@ class EnsembleModelManager:
                     "model_name": "llama3.1:8b-instruct-q4_1",
                 },
             },
-            # Qwen-2.5 Chat
             "qwen-2.5:3b-instruct": {
                 "weight": 1.0,
                 "config": {
@@ -42,17 +41,14 @@ class EnsembleModelManager:
                     "model_name": "qwen2.5:3b-instruct",
                 },
             },
-            # Modèles Hugging Face
             "Llama-3.2-1B-Instruct": {
                 "weight": 1.0,
                 "config": {
-                    "model_type": "huggingface",
-                    "model_name": "meta-llama/Llama-3.2-1B-Instruct",
-                    "params": {
-                        "trust_remote_code": True,
-                    },  # Exemple de param spécifique
+                    "model_type": "ollama",
+                    "model_name": "llama3.2:1b-instruct-q4_0",
                 },
             },
+            # Modèles Hugging Face
             "TinyLlama-1.1B-Chat-v1.0": {
                 "weight": 1.0,
                 "config": {
@@ -60,7 +56,7 @@ class EnsembleModelManager:
                     "model_name": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
                     "params": {
                         "trust_remote_code": True,
-                    },  # Exemple de param spécifique
+                    },
                 },
             },
             "SmolLM2-1.7B-Instruct": {
@@ -70,7 +66,7 @@ class EnsembleModelManager:
                     "model_name": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
                     "params": {
                         "trust_remote_code": True,
-                    },  # Exemple de param spécifique
+                    },
                 },
             },
         }
@@ -227,7 +223,6 @@ class EnsembleModelManager:
         for model_name in self.active_models:
             config = self.available_models[model_name]["config"]
             self.model_instances[model_name] = ModelFactory.create_model(config)
-            print(f"==> {model_name} activé")
 
     def create_ensemble_runnable(
         self,
@@ -243,14 +238,16 @@ class EnsembleModelManager:
             model_instance = self.model_instances[model_name]
             model_runnable = model_instance.prepare_for_ensemble(few_shot=use_few_shot)
             model_runnables[model_name] = model_runnable
+            print(f"==> {model_name} runnable fetched")
 
         parallel_runnable = RunnableParallel(model_runnables)
         final_runnable = parallel_runnable | self._combine_responses
+        print(f"====> final_runnable obtained")
         return final_runnable
 
     async def stream_ensemble_response(
         self, message: cl.Message, runnable: Runnable
-    ) -> None:
+    ) -> cl.Message:
         msg = cl.Message(content="")
 
         async for chunk in runnable.astream(
@@ -270,6 +267,7 @@ class EnsembleModelManager:
             await cl.Message(content=stats_msg).send()
 
         await msg.send()
+        return msg
 
     # Les autres méthodes (_combine_responses, get_response_statistics, etc.)
     # restent identiques car elles travaillent sur le texte déjà généré
