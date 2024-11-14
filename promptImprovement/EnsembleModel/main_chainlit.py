@@ -54,7 +54,7 @@ async def on_chat_start():
 
     # mise en place du RAG
     vectorstore = VectorStoreFAISS(
-        embedding_model_name="your_model", index_path="path/to/your/index"
+        embedding_model_name="hkunlp/instructor-large", index_path="indexes"
     )
 
     cl.user_session.set("vectorstore", vectorstore)

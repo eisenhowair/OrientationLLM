@@ -53,20 +53,20 @@ class EmbeddingComparator:
                 index_path=str(index_path),
             )
 
-            # Si l'index n'existe pas, vectoriser les documents
-            if not index_path.exists():
+            # Dans tous les cas, vectoriser les documents si le vectorstore est vide
+            if not vectorstore.documents:
                 self.console.print(
                     f"[yellow]Vectorizing documents for {model_name}...[/]"
                 )
                 vectorstore.vectorize_from_local_directory(str(self.data_dir))
             else:
                 self.console.print(
-                    f"[green]Loading existing index for {model_name}...[/]"
+                    f"[green]Loaded existing index for {model_name} with {len(vectorstore.documents)} documents[/]"
                 )
 
             self.vectorstores[model_name] = vectorstore
 
-    def compare_responses(self, query: str, k: int = 4) -> pd.DataFrame:
+    def compare_responses(self, query: str, k: int = 5) -> pd.DataFrame:
         """
         Compare les réponses des différents modèles pour une même requête.
 
@@ -88,7 +88,7 @@ class EmbeddingComparator:
                         "model": model_name,
                         "rank": rank,
                         "score": doc["score"],
-                        "content": doc["content"][:200]
+                        "content": doc["content"][:300]
                         + "...",  # Tronquer pour la lisibilité
                         "metadata": str(doc.get("metadata", {})),
                     }
@@ -133,13 +133,19 @@ def main():
             "chunk_size": 1000,
             "chunk_overlap": 200,
         },
-        # Ajoutez d'autres modèles selon vos besoins
-        # {
-        #     "name": "OpenAI",
-        #     "model": "openai",
-        #     "chunk_size": 1000,
-        #     "chunk_overlap": 200
-        # },
+        {
+            "name": "nomic-embed-text",
+            "model": "ollama!nomic-embed-text",
+            # on met ollama! au début pour signaler qu'il faut le chercher sur OllamaEmbedding
+            "chunk_size": 1000,
+            "chunk_overlap": 200,
+        },
+        {
+            "name": "Instructor L",
+            "model": "hkunlp/instructor-large",
+            "chunk_size": 1000,
+            "chunk_overlap": 200,
+        },
     ]
 
     # Initialiser le comparateur
@@ -166,7 +172,7 @@ def main():
 
         # Sauvegarder les résultats dans un CSV (optionnel)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        results_df.to_csv(f"comparison_results_{timestamp}.csv", index=False)
+        results_df.to_csv(f"comparison_results/{timestamp}.csv", index=False)
 
 
 if __name__ == "__main__":

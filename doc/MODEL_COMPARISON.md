@@ -51,7 +51,7 @@ Utilisation de "Program:" ou "Human:" avant chaque ligne, discussion tout seul e
 
 
 ### Résultats de la première discussion /15
-- llama3.1:8b-instruct-q4_1 : 11 points
+- Llama3.1:8b-instruct-q4_1 : 11 points
 - qwen-2.5:3b-instruct : 13.5 points
 - Llama-3.2-1B-Instruct : 9.5 points
 - TinyLlama-1.1B-Chat-v1.0 : 5.5 points
@@ -86,7 +86,7 @@ Très rassurant, se met bien dans le rôle donné d'un conseiller d'orientation 
 
 #### Llama-3.2-1B-Instruct
 Remarque:<br>
-Commence chaque message par une fomrule, ce qui est bizarre passé le premier message, légères fautes de syntaxe. Pose des questions originales et intéressantes, mais la formulation laise à désirer. Adopte une attitude positive. Suit trop les consignes du prompt à la lettre, ça se voit dans son plan de réponse (formulation type "Je vais maintenant ...").
+Commence chaque message par une formule, ce qui est bizarre passé le premier message, légères fautes de syntaxe. Pose des questions originales et intéressantes, mais la formulation laisse à désirer. Adopte une attitude positive. Suit trop les consignes du prompt à la lettre, ça se voit dans son plan de réponse (formulation type "Je vais maintenant ...").
 - Note aspect humain : 3.5/5
 - Note pertinence : 4/5
 - Note langue : 3.5/5
@@ -107,7 +107,7 @@ Une phrase sur deux n'a aucun sens, dommage parce que la deuxième phrase laisse
 
 
 ### Résultats de la seconde discussion /15
-- llama3.1:8b-instruct-q4_1 : 12.5 points
+- Llama3.1:8b-instruct-q4_1 : 12.5 points
 - qwen-2.5:3b-instruct : 14.5 points
 - Llama-3.2-1B-Instruct : 11 points
 - TinyLlama-1.1B-Chat-v1.0 : 6 points
@@ -140,7 +140,7 @@ Réponses extrêmement courtes et dépourvues de contenu pertinent. Aucune réel
 - Note pertinence : 0.5/5
 - Note langue : 1/5
 
-#### Modèle: llama3.1:8b-instruct-q4_1
+#### Modèle: Llama3.1:8b-instruct-q4_1
 Remarque :<br>
 Propose une réponse qui prend en compte l'émotion de Thomas et valorise son intérêt pour l'écologie. Bonne tentative de créer un lien avec son expérience passée en hôtellerie. La réponse est structurée et encourageante, bien que parfois légèrement formelle.
 - Note aspect humain : 4/5
@@ -164,13 +164,13 @@ Excellente compréhension des préoccupations de Thomas. Le modèle valorise son
 ### Résultats de la troisième discussion /15
 - TinyLlama-1.1B-Chat-v1.0 : 3.5 points
 - SmolLM2-1.7B-Instruct : 2.5 points
-- llama3.1:8b-instruct-q4_1 : 12 points
+- Llama3.1:8b-instruct-q4_1 : 12 points
 - Llama-3.2-1B-Instruct : 7.5 points
 - qwen-2.5:3b-instruct : 14.5 points
 
 ### Scores totaux /45
 1. **qwen-2.5:3b-instruct** : 42.5/45
-2. **llama3.1:8b-instruct-q4_1** : 35.5/45
+2. **Llama3.1:8b-instruct-q4_1** : 35.5/45
 3. **Llama-3.2-1B-Instruct** : 28/45
 4. **TinyLlama-1.1B-Chat-v1.0** : 15/45
 5. **SmolLM2-1.7B-Instruct** : 8.5/45
