@@ -8,6 +8,7 @@ import chainlit as cl
 from ModelFactory import ModelFactory, BaseLanguageModel
 from prompt_warehouse import *
 from langchain.schema.runnable.config import RunnableConfig
+from vector_store_manager import *
 
 """ trop lourd, trop lent (30 minutes pour une question minimum)
 # LLaMA 3.1 Minitron 4B (NVIDIA)
@@ -248,10 +249,16 @@ class EnsembleModelManager:
     async def stream_ensemble_response(
         self, message: cl.Message, runnable: Runnable
     ) -> cl.Message:
+        vectorstore = cl.user_session.get("vectorstore")  # type: VectorStoreFAISS
         msg = cl.Message(content="")
 
         async for chunk in runnable.astream(
-            {"input": message.content},
+            {
+                "input": message.content,
+                "context": vectorstore.similarity_search(
+                    query=message
+                ),  # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
+            },
             config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
         ):
             await msg.stream_token(chunk)

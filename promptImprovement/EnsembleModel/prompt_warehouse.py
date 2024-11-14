@@ -68,7 +68,13 @@ Directives importantes :
 - Évite d'enchaîner les questions qui pourraient mettre mal à l'aise
 - Montre qu'il est normal de ne pas avoir toutes les réponses à ce stade
 - Propose des premières étapes concrètes et accessibles
+
+
+Documents contenant des informations sur l'orientation:
+{context}
 """
+
+
 FS_human_example_1 = "Je suis en terminale scientifique et j’hésite entre continuer en médecine ou en ingénierie."
 FS_model_example_1 = "C’est génial que tu aies ces deux options. Prenons un moment pour réfléchir aux points clés de chaque domaine. En médecine, tu t'engages à aider les autres tout en poursuivant une carrière stable et respectée. L'ingénierie, quant à elle, te permettra d'innover et de travailler sur des projets techniques stimulants. Réfléchis à ce qui te motive le plus : le contact humain au quotidien ou la résolution de problèmes techniques. Une option serait aussi de considérer des domaines combinant les deux, comme la bio-ingénierie."
 FS_human_example_2 = "Je suis en première année de licence de droit, mais je me demande si je ne devrais pas m’orienter vers des études de commerce."

@@ -10,6 +10,7 @@ from chainlit.types import ThreadDict
 from langchain.memory import ConversationBufferMemory
 from ensemble_model_gestion import EnsembleModelManager
 from typing import List, Dict, Optional
+from vector_store_manager import *
 
 # Pour ajouter un modèle: le rajouter dans les available model de ensemble_model_gestion.py
 
@@ -51,6 +52,13 @@ async def on_chat_start():
         generate_specific_message(None, None),
     )
 
+    # mise en place du RAG
+    vectorstore = VectorStoreFAISS(
+        embedding_model_name="your_model", index_path="path/to/your/index"
+    )
+
+    cl.user_session.set("vectorstore", vectorstore)
+
     # Initialize EnsembleModelManager
     ensemble_manager = EnsembleModelManager()
     cl.user_session.set("ensemble_manager", ensemble_manager)
@@ -60,6 +68,7 @@ async def on_chat_start():
         formation=None,
         use_few_shot=False,
     )
+
     cl.user_session.set("runnable", runnable)
 
     # mise en place du RAG
