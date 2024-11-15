@@ -16,7 +16,7 @@ class EmbeddingComparator:
         self,
         data_dir: str,
         models_config: List[Dict[str, Any]],
-        index_base_path: str = "indexes",
+        index_base_path: str = "embedding_indexes",
     ):
         """
         Initialise le comparateur.
@@ -42,15 +42,12 @@ class EmbeddingComparator:
                 f"\n[bold blue]Initializing vectorstore for {model_name}...[/]"
             )
 
-            # Créer le chemin pour l'index de ce modèle
-            index_path = self.index_base_path / f"{model_name.replace('/', '_')}.faiss"
-
             # Initialiser le vectorstore
             vectorstore = VectorStoreFAISS(
                 embedding_model_name=config["model"],
                 chunk_size=config.get("chunk_size", 1000),
                 chunk_overlap=config.get("chunk_overlap", 200),
-                index_path=str(index_path),
+                index_path=str(self.index_base_path),
             )
 
             # Dans tous les cas, vectoriser les documents si le vectorstore est vide

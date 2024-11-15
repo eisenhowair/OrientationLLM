@@ -73,7 +73,12 @@ Directives importantes :
 Documents contenant des informations sur l'orientation:
 {context}
 """
+prompt_test_ygo_rag = """
+Tu es un expert du jeu de cartes de Yu-Gi-Oh t'exprimant en français. Ton rôle est d'aider l'utilisateur dans ses requêtes.
 
+Si l'utilisateur te demande de l'aide pour créer un deck, propose lui une decklist en te basant sur les cartes suivantes:
+{context}
+"""
 
 FS_human_example_1 = "Je suis en terminale scientifique et j’hésite entre continuer en médecine ou en ingénierie."
 FS_model_example_1 = "C’est génial que tu aies ces deux options. Prenons un moment pour réfléchir aux points clés de chaque domaine. En médecine, tu t'engages à aider les autres tout en poursuivant une carrière stable et respectée. L'ingénierie, quant à elle, te permettra d'innover et de travailler sur des projets techniques stimulants. Réfléchis à ce qui te motive le plus : le contact humain au quotidien ou la résolution de problèmes techniques. Une option serait aussi de considérer des domaines combinant les deux, comme la bio-ingénierie."

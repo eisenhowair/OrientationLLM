@@ -54,7 +54,7 @@ async def on_chat_start():
 
     # mise en place du RAG
     vectorstore = VectorStoreFAISS(
-        embedding_model_name="hkunlp/instructor-large", index_path="indexes"
+        embedding_model_name="hkunlp/instructor-large", index_path="embedding_indexes"
     )
 
     cl.user_session.set("vectorstore", vectorstore)
@@ -111,7 +111,8 @@ def generate_specific_message(domaine: Optional[str], formation: Optional[str]) 
         return f"Ton rôle est de conseiller l'utilisateur sur les métiers du domaine {domaine}."
     elif formation:
         return f"L'utilisateur sort de la formation {formation}."
-    return prompt_no_domain_no_formation_v3
+    # return prompt_no_domain_no_formation_v3
+    return prompt_test_ygo_rag
 
 
 @cl.on_message

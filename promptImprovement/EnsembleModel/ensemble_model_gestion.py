@@ -20,6 +20,27 @@ from vector_store_manager import *
                     "params": {"trust_remote_code": True},
                 },
             },
+            # Modèles Hugging Face vraiment pas bons, galèrent en français
+            "TinyLlama-1.1B-Chat-v1.0": {
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
+                },
+            },
+            "SmolLM2-1.7B-Instruct": {
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
+                },
+            },
 """
 
 
@@ -47,27 +68,6 @@ class EnsembleModelManager:
                 "config": {
                     "model_type": "ollama",
                     "model_name": "llama3.2:1b-instruct-q4_0",
-                },
-            },
-            # Modèles Hugging Face
-            "TinyLlama-1.1B-Chat-v1.0": {
-                "weight": 1.0,
-                "config": {
-                    "model_type": "huggingface",
-                    "model_name": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
-                    "params": {
-                        "trust_remote_code": True,
-                    },
-                },
-            },
-            "SmolLM2-1.7B-Instruct": {
-                "weight": 1.0,
-                "config": {
-                    "model_type": "huggingface",
-                    "model_name": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
-                    "params": {
-                        "trust_remote_code": True,
-                    },
                 },
             },
         }
@@ -256,7 +256,7 @@ class EnsembleModelManager:
             {
                 "input": message.content,
                 "context": vectorstore.similarity_search(
-                    query=message
+                    query=message.content
                 ),  # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
             },
             config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
