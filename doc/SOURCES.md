@@ -7,6 +7,7 @@ This document lists the sources used in our GitHub research project, categorized
 
 ### **Articles**
 
+* **Multi-Agent RAG** ([https://superlinked.com/vectorhub/articles/enhancing-rag-multi-agent-system](https://superlinked.com/vectorhub/articles/enhancing-rag-multi-agent-system))
 
 ### **Code & Implementations**
 

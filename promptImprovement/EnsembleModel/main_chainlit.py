@@ -111,8 +111,7 @@ def generate_specific_message(domaine: Optional[str], formation: Optional[str]) 
         return f"Ton rôle est de conseiller l'utilisateur sur les métiers du domaine {domaine}."
     elif formation:
         return f"L'utilisateur sort de la formation {formation}."
-    # return prompt_no_domain_no_formation_v3
-    return prompt_test_ygo_rag
+    return prompt_no_domain_no_formation_v3
 
 
 @cl.on_message

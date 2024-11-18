@@ -147,7 +147,7 @@ def main():
 
     # Initialiser le comparateur
     comparator = EmbeddingComparator(
-        data_dir="C:/Users/elias/yugioh_cardlist_scraper/data/en",
+        data_dir="files_to_index",
         models_config=models_config,
         index_base_path="embedding_indexes",
     )
