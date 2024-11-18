@@ -63,11 +63,11 @@ class EnsembleModelManager:
                     "model_name": "qwen2.5:3b-instruct",
                 },
             },
-            "Llama-3.2-1B-Instruct": {
+            "Llama-3.2-3B-Instruct": {
                 "weight": 1.0,
                 "config": {
                     "model_type": "ollama",
-                    "model_name": "llama3.2:1b-instruct-q4_0",
+                    "model_name": "llama3.2:3b-instruct-q4_0",
                 },
             },
         }
@@ -251,13 +251,14 @@ class EnsembleModelManager:
     ) -> cl.Message:
         vectorstore = cl.user_session.get("vectorstore")  # type: VectorStoreFAISS
         msg = cl.Message(content="")
+        context = vectorstore.similarity_search(query=message.content)
+        for result in context:
+            print(f"Contexte récupéré:{result}\n======\n")
 
         async for chunk in runnable.astream(
             {
                 "input": message.content,
-                "context": vectorstore.similarity_search(
-                    query=message.content
-                ),  # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
+                "context": context,  # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
             },
             config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
         ):
