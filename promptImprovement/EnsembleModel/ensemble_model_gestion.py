@@ -70,6 +70,16 @@ class EnsembleModelManager:
                     "model_name": "llama3.2:3b-instruct-q4_0",
                 },
             },
+            "Phi-3.5-mini-instruct": {
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "microsoft/Phi-3.5-mini-instruct",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
+                },
+            },
         }
         self.active_models: List[str] = []
         self.model_instances: Dict[str, BaseLanguageModel] = {}
