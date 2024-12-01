@@ -1,0 +1,2 @@
+Ce dossier sert à tester plusieurs modèles, via ensemble_model_gestion.py.
+Il contient aussi de quoi comparer des modèles d'embedding avec EmbeddingComparator.py. Ce programme crée des vectorstore pour chacun de ces modèles. Ces vectorstores peuvent ensuite être utilisés par les autres programmes.

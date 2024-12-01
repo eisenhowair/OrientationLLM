@@ -1,4 +1,3 @@
-from langchain_community.llms import Ollama
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.schema import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough, RunnableLambda, Runnable
@@ -15,6 +14,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.types import ThreadDict
 from prompt_warehouse import *
+
 
 def prepare_prompt_zero_shot(corps_prompt, model):
 
@@ -38,6 +38,7 @@ def prepare_prompt_zero_shot(corps_prompt, model):
         | StrOutputParser()
     )
     return runnable
+
 
 def prepare_prompt_few_shot(corps_prompt, model):
 
