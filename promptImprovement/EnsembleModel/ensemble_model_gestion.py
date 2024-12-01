@@ -10,8 +10,8 @@ from prompt_warehouse import *
 from langchain.schema.runnable.config import RunnableConfig
 from vector_store_manager import *
 
-""" trop lourd, trop lent (30 minutes pour une question minimum)
-# LLaMA 3.1 Minitron 4B (NVIDIA)
+""" 
+# LLaMA 3.1 Minitron 4B (NVIDIA) trop lourd, trop lent (30 minutes pour une question minimum)
             "llama3.1-minitron-4b-nvidia": {
                 "weight": 1.0,
                 "config": {
@@ -36,6 +36,16 @@ from vector_store_manager import *
                 "config": {
                     "model_type": "huggingface",
                     "model_name": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
+                },
+            },         
+            "Phi-3.5-mini-instruct": {  # 3.8B
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "microsoft/Phi-3.5-mini-instruct",
                     "params": {
                         "trust_remote_code": True,
                     },
@@ -70,16 +80,6 @@ class EnsembleModelManager:
                     "model_name": "llama3.2:3b-instruct-q4_0",
                 },
             },
-            "Phi-3.5-mini-instruct": {
-                "weight": 1.0,
-                "config": {
-                    "model_type": "huggingface",
-                    "model_name": "microsoft/Phi-3.5-mini-instruct",
-                    "params": {
-                        "trust_remote_code": True,
-                    },
-                },
-            },
         }
         self.active_models: List[str] = []
         self.model_instances: Dict[str, BaseLanguageModel] = {}
@@ -103,7 +103,6 @@ class EnsembleModelManager:
         if len(responses) == 1:
             return list(responses.values())[0]
 
-        # Convertir le dictionnaire en listes et afficher les réponses
         model_names = list(responses.keys())
         response_texts = list(responses.values())
 
@@ -116,7 +115,6 @@ class EnsembleModelManager:
             print("------------------------")
         print("\n")
 
-        # Créer une matrice de similarité entre toutes les réponses
         vectorizer = TfidfVectorizer(stop_words="english")
         tfidf_matrix = vectorizer.fit_transform(response_texts)
         similarity_matrix = cosine_similarity(tfidf_matrix)
