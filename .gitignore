@@ -15,3 +15,5 @@ ProjetLLM/
 *.msi
 ollama_logs/
 offload
+comparison_results/
+embedding_indexes

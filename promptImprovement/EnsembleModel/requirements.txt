@@ -1,12 +1,5 @@
 hugginface-hub #pour utiliser les modèles HF
 bitsandbytes #pour les mettres en format 8bit (plutôt que 16 ou 32), mais pour que ça fonctionne sur gpu
-"""
-# il faut des versions spécifiques de CUDA (sur windows)
-# pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 (si la machine est compatible)
-#torch==2.5.1+cu124
-#torchaudio==2.5.1+cu124
-#torchvision==0.20.1+cu124
-"""
 langchain-huggingface
 langchain-ollama # l'ancienne version pour utiliser ollama est deprecated
 bitsandbytes-windows
@@ -14,3 +7,9 @@ sentencepiece # pour tinyllama (utilise un tokenizer spécifique)
 langchain==0.3.4
 langchain-community==0.3.3
 langchain-core==0.3.13
+
+# il faut des versions spécifiques de CUDA (sur windows)
+# pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 (si la machine est compatible)
+#torch==2.5.1+cu124
+#torchaudio==2.5.1+cu124
+#torchvision==0.20.1+cu124

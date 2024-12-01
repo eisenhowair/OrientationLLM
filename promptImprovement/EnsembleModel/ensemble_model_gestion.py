@@ -8,15 +8,47 @@ import chainlit as cl
 from ModelFactory import ModelFactory, BaseLanguageModel
 from prompt_warehouse import *
 from langchain.schema.runnable.config import RunnableConfig
+from vector_store_manager import *
 
-""" trop lourd, trop lent (30 minutes pour une question minimum)
-# LLaMA 3.1 Minitron 4B (NVIDIA)
+""" 
+# LLaMA 3.1 Minitron 4B (NVIDIA) trop lourd, trop lent (30 minutes pour une question minimum)
             "llama3.1-minitron-4b-nvidia": {
                 "weight": 1.0,
                 "config": {
                     "model_type": "huggingface",
                     "model_name": "nvidia/Llama-3.1-Minitron-4B-Width-Base",
                     "params": {"trust_remote_code": True},
+                },
+            },
+            # Modèles Hugging Face vraiment pas bons, galèrent en français
+            "TinyLlama-1.1B-Chat-v1.0": {
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
+                },
+            },
+            "SmolLM2-1.7B-Instruct": {
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
+                },
+            },         
+            "Phi-3.5-mini-instruct": {  # 3.8B
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "microsoft/Phi-3.5-mini-instruct",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
                 },
             },
 """
@@ -34,7 +66,6 @@ class EnsembleModelManager:
                     "model_name": "llama3.1:8b-instruct-q4_1",
                 },
             },
-            # Qwen-2.5 Chat
             "qwen-2.5:3b-instruct": {
                 "weight": 1.0,
                 "config": {
@@ -42,35 +73,11 @@ class EnsembleModelManager:
                     "model_name": "qwen2.5:3b-instruct",
                 },
             },
-            # Modèles Hugging Face
-            "Llama-3.2-1B-Instruct": {
+            "Llama-3.2-3B-Instruct": {
                 "weight": 1.0,
                 "config": {
-                    "model_type": "huggingface",
-                    "model_name": "meta-llama/Llama-3.2-1B-Instruct",
-                    "params": {
-                        "trust_remote_code": True,
-                    },  # Exemple de param spécifique
-                },
-            },
-            "TinyLlama-1.1B-Chat-v1.0": {
-                "weight": 1.0,
-                "config": {
-                    "model_type": "huggingface",
-                    "model_name": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
-                    "params": {
-                        "trust_remote_code": True,
-                    },  # Exemple de param spécifique
-                },
-            },
-            "SmolLM2-1.7B-Instruct": {
-                "weight": 1.0,
-                "config": {
-                    "model_type": "huggingface",
-                    "model_name": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
-                    "params": {
-                        "trust_remote_code": True,
-                    },  # Exemple de param spécifique
+                    "model_type": "ollama",
+                    "model_name": "llama3.2:3b-instruct-q4_0",
                 },
             },
         }
@@ -96,7 +103,6 @@ class EnsembleModelManager:
         if len(responses) == 1:
             return list(responses.values())[0]
 
-        # Convertir le dictionnaire en listes et afficher les réponses
         model_names = list(responses.keys())
         response_texts = list(responses.values())
 
@@ -109,7 +115,6 @@ class EnsembleModelManager:
             print("------------------------")
         print("\n")
 
-        # Créer une matrice de similarité entre toutes les réponses
         vectorizer = TfidfVectorizer(stop_words="english")
         tfidf_matrix = vectorizer.fit_transform(response_texts)
         similarity_matrix = cosine_similarity(tfidf_matrix)
@@ -227,7 +232,6 @@ class EnsembleModelManager:
         for model_name in self.active_models:
             config = self.available_models[model_name]["config"]
             self.model_instances[model_name] = ModelFactory.create_model(config)
-            print(f"==> {model_name} activé")
 
     def create_ensemble_runnable(
         self,
@@ -243,18 +247,27 @@ class EnsembleModelManager:
             model_instance = self.model_instances[model_name]
             model_runnable = model_instance.prepare_for_ensemble(few_shot=use_few_shot)
             model_runnables[model_name] = model_runnable
+            print(f"==> {model_name} runnable fetched")
 
         parallel_runnable = RunnableParallel(model_runnables)
         final_runnable = parallel_runnable | self._combine_responses
+        print(f"====> final_runnable obtained")
         return final_runnable
 
     async def stream_ensemble_response(
         self, message: cl.Message, runnable: Runnable
-    ) -> None:
+    ) -> cl.Message:
+        vectorstore = cl.user_session.get("vectorstore")  # type: VectorStoreFAISS
         msg = cl.Message(content="")
+        context = vectorstore.similarity_search(query=message.content)
+        for result in context:
+            print(f"Contexte récupéré:{result}\n======\n")
 
         async for chunk in runnable.astream(
-            {"input": message.content},
+            {
+                "input": message.content,
+                "context": context,  # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
+            },
             config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
         ):
             await msg.stream_token(chunk)
@@ -270,6 +283,7 @@ class EnsembleModelManager:
             await cl.Message(content=stats_msg).send()
 
         await msg.send()
+        return msg
 
     # Les autres méthodes (_combine_responses, get_response_statistics, etc.)
     # restent identiques car elles travaillent sur le texte déjà généré
