@@ -1,4 +1,4 @@
-from langchain_community.llms import Ollama
+from langchain_ollama.llms import OllamaLLM
 from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.input_widget import TextInput, Select, Tags
@@ -26,7 +26,7 @@ def auth_callback(username: str, password: str):
         return None
 
 
-# model = Ollama(base_url="http://localhost:11434", model="llama3.1:8b-instruct-q4_1")
+# model = OllamaLLM(base_url="http://localhost:11434", model="llama3.1:8b-instruct-q4_1")
 
 
 @cl.on_chat_start
@@ -124,7 +124,7 @@ def setup_model(domaine, formation, nom_model):
     else:
         specific_message = prompt_no_domain_no_formation_v3
 
-    model = Ollama(
+    model = OllamaLLM(
         base_url="http://localhost:11434",
         model=nom_model,
         cache=True,
