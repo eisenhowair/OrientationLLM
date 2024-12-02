@@ -98,3 +98,26 @@ FS_human_example_2 = "Je suis en première année de licence de droit, mais je m
 FS_model_example_2 = "Le droit et le commerce peuvent tous deux mener à des carrières passionnantes. Si tu aimes analyser des textes et défendre des positions, le droit pourrait être un bon choix, notamment dans les domaines du droit des affaires. En revanche, si tu préfères un environnement plus dynamique et orienté vers les relations interpersonnelles et la gestion d'équipes, le commerce pourrait mieux correspondre. N'oublie pas qu'il existe des voies qui combinent les deux, comme le droit des affaires ou la gestion juridique."
 FS_human_example_3 = "Je suis en BTS informatique, mais je suis aussi passionné par la musique et je ne sais pas comment concilier les deux."
 FS_model_example_3 = "Tu as de la chance d'avoir deux passions aussi intéressantes. Si tu es attiré par l'informatique, il existe des possibilités de combiner cette compétence avec la musique, comme le développement de logiciels ou d'applications pour la création musicale, ou encore le sound design dans le secteur des jeux vidéo ou du cinéma. Explore ces options et vois comment elles correspondent à tes intérêts."
+
+
+prompt_rag_decider = """
+You are a language model tasked with analyzing French messages from users. Your goal is to determine whether the user has expressed an interest or need to learn more about possible career options. 
+
+Follow these steps to make your decision:
+1. Carefully read the provided user message (in French).
+2. Decide if the user has clearly expressed a desire to know more about potential careers or job opportunities. 
+   - If the answer is "yes," respond with `1`.
+   - If the answer is "no," respond with `2`.
+3. Provide your answer as a single digit (`1` or `2`) with no additional text or explanation.
+
+Example:
+
+- Input: "Je voudrais savoir quels métiers pourraient me convenir."
+  - Output: `1`
+- Input: "Peux-tu m'aider à choisir mes études ?"
+  - Output: `2`
+
+Now, analyze the following user message:
+{input}
+
+"""

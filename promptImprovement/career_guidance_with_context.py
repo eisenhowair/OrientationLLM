@@ -9,6 +9,7 @@ from chainlit.types import ThreadDict
 from langchain.memory import ConversationBufferMemory
 from typing import List, Dict, Optional
 from vector_store_manager import *
+from RAGDecider import RAGDecider
 
 MODEL = "qwen2.5:3b-instruct"
 
@@ -111,6 +112,15 @@ def setup_model(domaine, formation, nom_model=MODEL):
     runnable = prepare_prompt_zero_shot(corps_prompt=specific_message, model=model)
     cl.user_session.set("runnable", runnable)
     print("runnable dans la session")
+    setup_multi_agent()
+
+
+def setup_multi_agent():
+    rag_decider = RAGDecider()
+    rag_decider.prepare_runnable()
+    print(f"RAGDecider returned: {type(rag_decider)}")
+    print(f"Runnable returned: {type(rag_decider.runnable)}")
+    cl.user_session.set("runnable_multi_agent", rag_decider)
 
 
 @cl.on_message
@@ -118,6 +128,9 @@ async def on_message(message: cl.Message):
     runnable = cl.user_session.get("runnable")
     memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
     vectorstore = cl.user_session.get("vectorstore")  # type: VectorStoreFAISS
+
+    rag_decider = cl.user_session.get("runnable_multi_agent")  # type: RAGDecider
+    need_context = rag_decider.invoke_agent(user_input=message.content)
 
     msg = await stream_response(message, runnable, vectorstore)  # type: cl.Message
 
@@ -185,3 +198,4 @@ async def on_chat_resume(thread: ThreadDict):
 
     # mise en place du model+prompt (le runnable donc)
     setup_model(domaine=None, formation=None)
+    setup_multi_agent()

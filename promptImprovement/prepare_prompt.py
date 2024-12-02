@@ -3,6 +3,7 @@ from langchain.schema import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough, RunnableLambda, Runnable
 from operator import itemgetter
 from langchain_core.prompts import (
+    PromptTemplate,
     HumanMessagePromptTemplate,
     AIMessagePromptTemplate,
     ChatPromptTemplate,
@@ -14,6 +15,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.types import ThreadDict
 from prompt_warehouse import *
+from langchain_huggingface import HuggingFacePipeline
+from langchain.chains import LLMChain
 
 
 def prepare_prompt_zero_shot(corps_prompt, model):
@@ -87,3 +90,78 @@ Les exemples suivants illustrent le type d'échange attendu. Utilise-les comme r
         | StrOutputParser()
     )
     return runnable
+
+
+def prepare_prompt_few_shot_rag_decider(
+    corps_prompt, model: HuggingFacePipeline, version: str = "simple"
+):
+    """
+    @param version: Determines the type of few-shot prompt to prepare (advanced uses the langchain FS template).
+    @param corps_prompt: Prompt body (the syntax must follow the template or lack thereof)
+    @param model: HuggingFacePipeline Most likely returned by HuggingFaceModel.get_model()
+    """
+
+    if version == "advanced":
+        memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
+        intro_few_shot = """
+        [EXEMPLES DE CONVERSATIONS PASSÉES]
+    Les exemples suivants illustrent le type d'échange attendu. Utilise-les comme référence pour le ton et la structure, sans les confondre avec les nouvelles questions.
+    """
+        shots = [
+            {"input": FS_human_example_1, "output": FS_model_example_1},
+            {"input": FS_human_example_2, "output": FS_model_example_2},
+            {"input": FS_human_example_3, "output": FS_model_example_3},
+        ]
+
+        example_prompt = (
+            SystemMessagePromptTemplate.from_template(
+                intro_few_shot
+            )  # pour que le modèle arrive à différencier les examples passés de la discussion actuelle
+            + HumanMessagePromptTemplate.from_template("{input}")
+            + AIMessagePromptTemplate.from_template("{output}")
+        )
+
+        few_shot_prompt = FewShotChatMessagePromptTemplate(
+            examples=shots,
+            example_prompt=example_prompt,
+        )
+
+        prompt_orientation = ChatPromptTemplate.from_messages(
+            [
+                ("system", f"{corps_prompt}"),
+                few_shot_prompt,
+                MessagesPlaceholder(variable_name="history"),
+                ("human", "{input}"),
+            ]
+        )
+
+        runnable = (
+            RunnablePassthrough.assign(
+                history=RunnableLambda(lambda _: memory.load_memory_variables({}))
+                | itemgetter("history")
+            )
+            | prompt_orientation
+            | model
+            | StrOutputParser()
+        )
+        return runnable
+
+    elif version == "simple":
+        # Define the prompt template
+        prompt_template = PromptTemplate(
+            input_variables=["input"], template=corps_prompt
+        )
+
+        # Create the LLMChain
+        llm_chain = LLMChain(llm=model, prompt=prompt_template)
+
+        # Define the Runnable pipeline
+        runnable = (
+            llm_chain  # Pass the input dict {"input": ...} to LLMChain
+            | (
+                lambda output: output["text"]
+            )  # Extract the raw text output from the model
+            | StrOutputParser()  # Process the text to ensure it's in string format
+        )
+
+        return runnable
