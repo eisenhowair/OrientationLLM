@@ -1,5 +1,4 @@
 from langchain_ollama.llms import OllamaLLM
-from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.input_widget import TextInput, Select
 from prompt_warehouse import *
@@ -11,7 +10,6 @@ from langchain.memory import ConversationBufferMemory
 from typing import List, Dict, Optional
 from vector_store_manager import *
 
-# Pour ajouter un modèle: le rajouter dans les available model de ensemble_model_gestion.py
 MODEL = "qwen2.5:3b-instruct"
 
 
@@ -112,33 +110,41 @@ def setup_model(domaine, formation, nom_model=MODEL):
     )
     runnable = prepare_prompt_zero_shot(corps_prompt=specific_message, model=model)
     cl.user_session.set("runnable", runnable)
+    print("runnable dans la session")
 
 
 @cl.on_message
 async def on_message(message: cl.Message):
     runnable = cl.user_session.get("runnable")
     memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
-
     vectorstore = cl.user_session.get("vectorstore")  # type: VectorStoreFAISS
+
+    msg = await stream_response(message, runnable, vectorstore)  # type: cl.Message
+
+    # Update memory
+    memory.chat_memory.add_user_message(message.content)
+    memory.chat_memory.add_ai_message(msg.content)
+
+
+async def stream_response(
+    message: cl.Message, runnable: Runnable, vectorstore: VectorStoreFAISS
+) -> cl.Message:
     msg = cl.Message(content="")
     context = vectorstore.similarity_search(query=message.content)
     for result in context:
         print(f"Contexte récupéré:{result}\n======\n")
 
-    msg = cl.Message(content="")
     async for chunk in runnable.astream(
         {
             "input": message.content,
-            "context": context,
-            # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
+            "context": context,  # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
         },
         config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
     ):
         await msg.stream_token(chunk)
+
     await msg.send()
-    # Update memory
-    memory.chat_memory.add_user_message(message.content)
-    memory.chat_memory.add_ai_message(msg.content)
+    return msg
 
 
 @cl.on_chat_resume
@@ -169,3 +175,13 @@ async def on_chat_resume(thread: ThreadDict):
         "domaine": None,
     }
     cl.user_session.set("old_settings", old_settings)
+
+    # mise en place du RAG
+    vectorstore = VectorStoreFAISS(
+        embedding_model_name="hkunlp/instructor-large",
+        index_path="EnsembleModel/embedding_indexes",
+    )  # on réutilise le vectorstore déjà existant dans EnsembleModel
+    cl.user_session.set("vectorstore", vectorstore)
+
+    # mise en place du model+prompt (le runnable donc)
+    setup_model(domaine=None, formation=None)
