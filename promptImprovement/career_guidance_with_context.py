@@ -116,7 +116,7 @@ def setup_model(domaine, formation, nom_model=MODEL):
 
 
 def setup_multi_agent():
-    rag_decider = RAGDecider()
+    rag_decider = RAGDecider(response_length=2)
     rag_decider.prepare_runnable()
     print(f"RAGDecider returned: {type(rag_decider)}")
     print(f"Runnable returned: {type(rag_decider.runnable)}")
@@ -130,7 +130,11 @@ async def on_message(message: cl.Message):
     vectorstore = cl.user_session.get("vectorstore")  # type: VectorStoreFAISS
 
     rag_decider = cl.user_session.get("runnable_multi_agent")  # type: RAGDecider
-    need_context = rag_decider.invoke_agent(user_input=message.content)
+
+    need_context = await stream_response(
+        message=message, runnable=rag_decider.runnable, vectorstore=None
+    )
+    need_context = need_context.content  # contient 1 ou 2
 
     msg = await stream_response(message, runnable, vectorstore)  # type: cl.Message
 
@@ -143,14 +147,17 @@ async def stream_response(
     message: cl.Message, runnable: Runnable, vectorstore: VectorStoreFAISS
 ) -> cl.Message:
     msg = cl.Message(content="")
-    context = vectorstore.similarity_search(query=message.content)
-    for result in context:
-        print(f"Contexte récupéré:{result}\n======\n")
+    if vectorstore is not None:
+        context = vectorstore.similarity_search(query=message.content)
+        for result in context:
+            print(f"Contexte récupéré:{result}\n======\n")
+    else:
+        context = ""
 
     async for chunk in runnable.astream(
         {
             "input": message.content,
-            "context": context,  # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
+            "context": context,  # rajouté ça pour donner accès au contexte, et rajouté {context} dans le prompt lui-même
         },
         config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
     ):

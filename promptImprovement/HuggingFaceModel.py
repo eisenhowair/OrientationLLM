@@ -56,17 +56,17 @@ class HuggingFaceModel:
         tokenizer = AutoTokenizer.from_pretrained(
             self.model_name,
             trust_remote_code=True,
-            use_fast=False,
+            use_fast=True,  # mettre à True pour mistralai/Ministral-8B-Instruct-2410
         )
 
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
 
         try:
-            if self.is_windows:
-                model = self._load_model_safe()
-            else:
-                model = self._load_model_with_quantization()
+            # if self.is_windows:
+            #   model = self._load_model_safe()
+            # else:
+            model = self._load_model_with_quantization()
         except Exception as e:
             print(f"Erreur lors du chargement du modèle: {e}")
             print(f"Tentative de chargement de {self.model_name} en mode sécurisé...")
