@@ -192,6 +192,7 @@ Message de l'utilisateur:
 - Réponds 2 si l'utilisateur ne s'intéresse pas aux métiers.
 """
 
+# en mettant beaucoup plus de shots, avec des cas + variés, le modèle réussit beaucoup mieux à répondre correctement
 prompt_rag_decider_advanced = """Tu es un assistant qui analyse les messages des utilisateurs pour déterminer s'ils expriment un intérêt pour des informations sur les métiers.
 
 Ta tâche est de classifier chaque message :

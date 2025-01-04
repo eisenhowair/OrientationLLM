@@ -45,3 +45,53 @@ class RAGDecider:
         response = self.runnable.invoke(formatted_prompt)
         print(f"Responseeee:{response}\n")
         return response
+
+    def prepare_career_intent_classifier(model):  # à essayer
+        """
+        Prépare un classificateur simple pour détecter les intentions liées aux métiers.
+
+        Args:
+            model: Le modèle de language à utiliser
+
+        Returns:
+            Callable: Une fonction qui prend un message utilisateur et retourne "1" ou "2"
+        """
+        prompt_template = """Tu es un assistant qui analyse les messages des utilisateurs pour déterminer s'ils expriment un intérêt pour des informations sur les métiers.
+
+    Ta tâche est de classifier chaque message :
+    - Réponds "1" si l'utilisateur demande des informations sur les métiers ou les débouchés professionnels
+    - Réponds "2" dans tous les autres cas
+
+    IMPORTANT:
+    - Réponds uniquement par "1" ou "2", sans aucun autre texte
+    - Ne fais pas de supposition, base-toi uniquement sur ce qui est explicitement exprimé
+    - Si le message contient plusieurs intentions, réponds "1" dès qu'une intention liée aux métiers est présente
+
+    Voici quelques exemples:
+
+    Message: À quelle heure se terminent les cours à l'université ?
+    Réponse: 2
+
+    Message: Franchement je ne sais pas quels métiers sont possibles depuis ce domaine
+    Réponse: 1
+
+    Message: Je ne suis pas intéressé par les métiers, uniquement par les cours
+    Réponse: 2
+
+    Message: {input}
+    Réponse:"""
+
+        def classify(user_message: str) -> str:
+            """
+            Classifie un message utilisateur.
+
+            Args:
+                user_message (str): Le message à classifier
+
+            Returns:
+                str: "1" si l'intention est liée aux métiers, "2" sinon
+            """
+            prompt = prompt_template.format(input=user_message)
+            return model.predict(prompt).strip()
+
+        return classify
