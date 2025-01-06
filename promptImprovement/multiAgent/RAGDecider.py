@@ -1,6 +1,10 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(os.getcwd()))))
 from HuggingFaceModel import HuggingFaceModel
-from prepare_prompt import *
-from prompt_warehouse import *
+from OllamaModel import OllamaModel
+from prepare_prompt import prepare_prompt_few_shot_rag_decider
 
 
 class RAGDecider:
@@ -17,6 +21,7 @@ class RAGDecider:
         # model_name="meta-llama/Llama-3.2-1B-Instruct",
         model_name="mistralai/Ministral-8B-Instruct-2410",
         response_length: int = 1,
+        provider: str = "HF",
     ):
         """
         Initialise l'agent.
@@ -25,13 +30,17 @@ class RAGDecider:
             model_name: Nom du modèle qui sera utilisé
         """
         self.model_name = model_name
-        self.prompt = prompt_rag_decider_simple
         self.response_length = response_length
+        self.provider = provider
 
     def prepare_runnable(self):
-        entity = HuggingFaceModel(
-            model_name=self.model_name, response_length=self.response_length
-        )
+        if self.provider == "HF":
+            entity = HuggingFaceModel(
+                model_name=self.model_name, response_length=self.response_length
+            )
+        elif self.provider == "OL":
+            entity = OllamaModel(model_name=self.model_name)
+
         self.model = entity.get_model()
 
         self.runnable = prepare_prompt_few_shot_rag_decider(

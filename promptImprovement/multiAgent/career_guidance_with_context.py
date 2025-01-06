@@ -1,14 +1,23 @@
+import chainlit as cl
+import sys
+import os
+
+from dotenv import load_dotenv
+
+from chainlit.input_widget import TextInput, Select
+from chainlit.types import ThreadDict
 from langchain_ollama.llms import OllamaLLM
 from langchain.schema.runnable.config import RunnableConfig
-from chainlit.input_widget import TextInput, Select
-from prompt_warehouse import *
-from prepare_prompt import *
-
-import chainlit as cl
-from chainlit.types import ThreadDict
+from langchain.schema.runnable import Runnable
 from langchain.memory import ConversationBufferMemory
 from typing import List, Dict, Optional
-from vector_store_manager import *
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__name__))))
+
+
+from ..vector_store_manager import VectorStoreFAISS
+from ..prompt_warehouse import prompt_no_domain_no_formation_v3_context
+from ..prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
 from RAGDecider import RAGDecider
 
 MODEL = "qwen2.5:3b-instruct"
@@ -48,9 +57,16 @@ async def on_chat_start():
     cl.user_session.set("old_settings", old_settings)
 
     # mise en place du RAG
+    load_dotenv()
+    ensemble_model_path = os.getenv("VECTORSTORE_INDEX_PATH")
+    if not ensemble_model_path:
+        raise ValueError(
+            "La variable d'environnement VECTORSTORE_INDEX_PATH n'est pas définie."
+        )
+
     vectorstore = VectorStoreFAISS(
         embedding_model_name="hkunlp/instructor-large",
-        index_path="EnsembleModel/embedding_indexes",
+        index_path=ensemble_model_path,
     )  # on réutilise le vectorstore déjà existant dans EnsembleModel
     cl.user_session.set("vectorstore", vectorstore)
 
@@ -116,7 +132,8 @@ def setup_model(domaine, formation, nom_model=MODEL):
 
 
 def setup_multi_agent():
-    rag_decider = RAGDecider(response_length=2)
+    # rag_decider = RAGDecider(response_length=2,model_name="mistralai/Ministral-8B-Instruct-2410",provider = "HF")
+    rag_decider = RAGDecider(response_length=2, model_name=MODEL, provider="OL")
     rag_decider.prepare_runnable()
     print(f"RAGDecider returned: {type(rag_decider)}")
     print(f"Runnable returned: {type(rag_decider.runnable)}")
@@ -131,16 +148,38 @@ async def on_message(message: cl.Message):
 
     rag_decider = cl.user_session.get("runnable_multi_agent")  # type: RAGDecider
 
-    need_context = await stream_response(
-        message=message, runnable=rag_decider.runnable, vectorstore=None
+    need_context = await stream_rag_decider_response(
+        message=message, runnable=rag_decider.runnable
     )
-    need_context = need_context.content  # contient 1 ou 2
+    need_context_str = need_context.content  # contient 1 ou 2 en string
+    need_context = int(need_context_str)
+    print(type(need_context))
 
-    msg = await stream_response(message, runnable, vectorstore)  # type: cl.Message
+    msg = await stream_response(
+        message, runnable, vectorstore if need_context == 1 else None
+    )  # type: cl.Message
 
     # Update memory
     memory.chat_memory.add_user_message(message.content)
     memory.chat_memory.add_ai_message(msg.content)
+
+
+@cl.step(name="Multi Agent")
+async def stream_rag_decider_response(
+    message: cl.Message, runnable: Runnable
+) -> cl.Message:
+    msg = cl.Message(content="")
+
+    async for chunk in runnable.astream(
+        {
+            "input": message.content,
+        },
+        config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
+    ):
+        await msg.stream_token(chunk)
+    await msg.send()
+
+    return msg
 
 
 async def stream_response(
@@ -163,7 +202,8 @@ async def stream_response(
     ):
         await msg.stream_token(chunk)
 
-    await msg.send()
+    if vectorstore is not None:
+        await msg.send()
     return msg
 
 

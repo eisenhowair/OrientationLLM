@@ -14,7 +14,7 @@ import torch
 import gc
 import platform
 from transformers import TextStreamer
-from queue import Empty  # Importer Empty depuis le module queue
+from queue import Empty
 
 
 class CustomTextStreamer(TextStreamer):
