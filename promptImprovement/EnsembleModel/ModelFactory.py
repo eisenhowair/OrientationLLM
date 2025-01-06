@@ -3,10 +3,8 @@ from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
 from langchain.schema.runnable import Runnable
 
-# from langchain_community.llms import Ollama
 from langchain_ollama.llms import OllamaLLM
 
-# from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -37,7 +35,6 @@ class CustomTextStreamer(TextStreamer):
                 raise StopIteration()
             return value
         except Empty:
-            # Vous pouvez personnaliser la gestion des timeouts ici
             return ""  # ou gérer autrement
 
 

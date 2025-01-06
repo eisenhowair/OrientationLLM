@@ -3,10 +3,12 @@ from langchain.schema import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough, RunnableLambda, Runnable
 from operator import itemgetter
 from langchain_core.prompts import (
+    PromptTemplate,
     HumanMessagePromptTemplate,
     AIMessagePromptTemplate,
     ChatPromptTemplate,
     SystemMessagePromptTemplate,
+    FewShotPromptTemplate,
 )
 from langchain_core.prompts.few_shot import FewShotChatMessagePromptTemplate
 import chainlit as cl
@@ -14,6 +16,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.types import ThreadDict
 from prompt_warehouse import *
+from langchain_huggingface import HuggingFacePipeline
+from langchain.chains import LLMChain
 
 
 def prepare_prompt_zero_shot(corps_prompt, model):
@@ -87,3 +91,57 @@ Les exemples suivants illustrent le type d'échange attendu. Utilise-les comme r
         | StrOutputParser()
     )
     return runnable
+
+
+def prepare_prompt_few_shot_rag_decider(
+    model: HuggingFacePipeline, version: str = "simple"
+):
+    """
+    @param version: Determines the type of few-shot prompt to prepare (advanced uses the langchain FS template).
+    @param model: HuggingFacePipeline Most likely returned by HuggingFaceModel.get_model()
+    """
+
+    if version == "advanced":
+
+        corps_prompt = prompt_rag_decider_advanced
+
+        example_template = """
+            Message: {input}
+            Réponse: {output}"""
+
+        example_prompt = PromptTemplate(
+            input_variables=["input", "output"], template=example_template
+        )
+
+        few_shot_prompt = FewShotPromptTemplate(
+            examples=shots_multiagent,
+            example_prompt=example_prompt,
+            prefix=corps_prompt + "\n\nExemples :",
+            suffix="Message: {input}\nRéponse:",
+            input_variables=["input"],
+        )
+
+        runnable = few_shot_prompt | model | StrOutputParser()
+        return runnable
+
+    elif version == "simple":
+        corps_prompt = prompt_rag_decider_simple
+
+        # Define the prompt template
+        prompt_template = PromptTemplate(
+            input_variables=["input"], template=corps_prompt
+        )
+
+        # Create the LLMChain
+        llm_chain = LLMChain(llm=model, prompt=prompt_template)
+
+        # Define the Runnable pipeline
+        runnable = (
+            llm_chain  # Pass the input dict {"input": ...} to LLMChain
+            | (
+                lambda output: output["text"]
+            )  # Extract the raw text output from the model
+            | StrOutputParser()  # Process the text to ensure it's in string format
+        )
+
+        return runnable

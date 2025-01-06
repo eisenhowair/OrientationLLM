@@ -1,17 +1,25 @@
-from langchain_ollama.llms import OllamaLLM
-from langchain.schema.runnable import Runnable
-from langchain.schema.runnable.config import RunnableConfig
-from chainlit.input_widget import TextInput, Select
-from prompt_warehouse import *
-from prepare_prompt import *
-
 import chainlit as cl
+import sys
+import os
+
+from dotenv import load_dotenv
+
+from chainlit.input_widget import TextInput, Select
 from chainlit.types import ThreadDict
+from langchain_ollama.llms import OllamaLLM
+from langchain.schema.runnable.config import RunnableConfig
+from langchain.schema.runnable import Runnable
 from langchain.memory import ConversationBufferMemory
 from typing import List, Dict, Optional
-from vector_store_manager import *
 
-# Pour ajouter un modèle: le rajouter dans les available model de ensemble_model_gestion.py
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__name__))))
+
+
+from ..vector_store_manager import VectorStoreFAISS
+from ..prompt_warehouse import prompt_no_domain_no_formation_v3_context
+from ..prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
+from RAGDecider import RAGDecider
+
 MODEL = "qwen2.5:3b-instruct"
 
 
@@ -49,9 +57,16 @@ async def on_chat_start():
     cl.user_session.set("old_settings", old_settings)
 
     # mise en place du RAG
+    load_dotenv()
+    ensemble_model_path = os.getenv("VECTORSTORE_INDEX_PATH")
+    if not ensemble_model_path:
+        raise ValueError(
+            "La variable d'environnement VECTORSTORE_INDEX_PATH n'est pas définie."
+        )
+
     vectorstore = VectorStoreFAISS(
         embedding_model_name="hkunlp/instructor-large",
-        index_path="EnsembleModel/embedding_indexes",
+        index_path=ensemble_model_path,
     )  # on réutilise le vectorstore déjà existant dans EnsembleModel
     cl.user_session.set("vectorstore", vectorstore)
 
@@ -112,33 +127,84 @@ def setup_model(domaine, formation, nom_model=MODEL):
     )
     runnable = prepare_prompt_zero_shot(corps_prompt=specific_message, model=model)
     cl.user_session.set("runnable", runnable)
+    print("runnable dans la session")
+    setup_multi_agent()
+
+
+def setup_multi_agent():
+    # rag_decider = RAGDecider(response_length=2,model_name="mistralai/Ministral-8B-Instruct-2410",provider = "HF")
+    rag_decider = RAGDecider(response_length=2, model_name=MODEL, provider="OL")
+    rag_decider.prepare_runnable()
+    print(f"RAGDecider returned: {type(rag_decider)}")
+    print(f"Runnable returned: {type(rag_decider.runnable)}")
+    cl.user_session.set("runnable_multi_agent", rag_decider)
 
 
 @cl.on_message
 async def on_message(message: cl.Message):
     runnable = cl.user_session.get("runnable")
     memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
-
     vectorstore = cl.user_session.get("vectorstore")  # type: VectorStoreFAISS
-    msg = cl.Message(content="")
-    context = vectorstore.similarity_search(query=message.content)
-    for result in context:
-        print(f"Contexte récupéré:{result}\n======\n")
 
+    rag_decider = cl.user_session.get("runnable_multi_agent")  # type: RAGDecider
+
+    need_context = await stream_rag_decider_response(
+        message=message, runnable=rag_decider.runnable
+    )
+    need_context_str = need_context.content  # contient 1 ou 2 en string
+    need_context = int(need_context_str)
+    print(type(need_context))
+
+    msg = await stream_response(
+        message, runnable, vectorstore if need_context == 1 else None
+    )  # type: cl.Message
+
+    # Update memory
+    memory.chat_memory.add_user_message(message.content)
+    memory.chat_memory.add_ai_message(msg.content)
+
+
+@cl.step(name="Multi Agent")
+async def stream_rag_decider_response(
+    message: cl.Message, runnable: Runnable
+) -> cl.Message:
     msg = cl.Message(content="")
+
     async for chunk in runnable.astream(
         {
             "input": message.content,
-            "context": context,
-            # rajouté ça pour donner accès au contexte, et rajouté {context dans le prompt lui-même}
         },
         config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
     ):
         await msg.stream_token(chunk)
     await msg.send()
-    # Update memory
-    memory.chat_memory.add_user_message(message.content)
-    memory.chat_memory.add_ai_message(msg.content)
+
+    return msg
+
+
+async def stream_response(
+    message: cl.Message, runnable: Runnable, vectorstore: VectorStoreFAISS
+) -> cl.Message:
+    msg = cl.Message(content="")
+    if vectorstore is not None:
+        context = vectorstore.similarity_search(query=message.content)
+        for result in context:
+            print(f"Contexte récupéré:{result}\n======\n")
+    else:
+        context = ""
+
+    async for chunk in runnable.astream(
+        {
+            "input": message.content,
+            "context": context,  # rajouté ça pour donner accès au contexte, et rajouté {context} dans le prompt lui-même
+        },
+        config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
+    ):
+        await msg.stream_token(chunk)
+
+    if vectorstore is not None:
+        await msg.send()
+    return msg
 
 
 @cl.on_chat_resume
@@ -169,3 +235,14 @@ async def on_chat_resume(thread: ThreadDict):
         "domaine": None,
     }
     cl.user_session.set("old_settings", old_settings)
+
+    # mise en place du RAG
+    vectorstore = VectorStoreFAISS(
+        embedding_model_name="hkunlp/instructor-large",
+        index_path="EnsembleModel/embedding_indexes",
+    )  # on réutilise le vectorstore déjà existant dans EnsembleModel
+    cl.user_session.set("vectorstore", vectorstore)
+
+    # mise en place du model+prompt (le runnable donc)
+    setup_model(domaine=None, formation=None)
+    setup_multi_agent()
