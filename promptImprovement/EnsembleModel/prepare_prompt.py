@@ -16,7 +16,6 @@ from langchain.memory import ConversationBufferMemory
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.types import ThreadDict
 from prompt_warehouse import *
-from vector_store_manager import *
 
 
 def prepare_prompt_zero_shot(model):

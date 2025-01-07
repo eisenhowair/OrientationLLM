@@ -16,7 +16,12 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__name__))))
 
 
 from ..vector_store_manager import VectorStoreFAISS
-from ..prompt_warehouse import prompt_no_domain_no_formation_v3_context
+from ..prompt_warehouse import (
+    prompt_v3_context,
+    prompt_v3_no_context,
+    prompt_v4_context,
+    prompt_v4_context_strict,
+)
 from ..prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
 from RAGDecider import RAGDecider
 
@@ -71,7 +76,7 @@ async def on_chat_start():
     cl.user_session.set("vectorstore", vectorstore)
 
     # mise en place du model+prompt (le runnable donc)
-    setup_model(domaine=None, formation=None)
+    setup_model()
 
 
 @cl.on_settings_update
@@ -85,16 +90,14 @@ async def settings_agent(settings):
             cl.user_session.set(key, settings[key])
 
     if changes_made:
-        setup_model(
-            domaine=settings["domaine"], formation=settings["formation_lvl"]
-        )  # update runnable
+        setup_model()  # update runnable
         new_old_settings = {
             key: settings[key] for key in old_settings.keys()
         }  # type : dict
         cl.user_session.set("old_settings", new_old_settings)
 
 
-def setup_model(domaine, formation, nom_model=MODEL):
+def setup_model(need_context=False, nom_model=MODEL):
     """
     Configure le prompt et le Runnable pour conseiller l'utilisateur en fonction du domaine et de la formation de l'utilisateur.
 
@@ -109,14 +112,10 @@ def setup_model(domaine, formation, nom_model=MODEL):
     # Initialiser le message spécifique
     specific_message = ""
 
-    if domaine and formation:
-        specific_message = f"Ton rôle est de conseiller l'utilisateur sur les métiers du domaine {domaine}. L'utilisateur sort de la formation {formation}."
-    elif domaine:
-        specific_message = f"Ton rôle est de conseiller l'utilisateur sur les métiers du domaine {domaine}."
-    elif formation:
-        specific_message = f"L'utilisateur sort de la formation {formation}."
+    if need_context:
+        specific_message = prompt_v4_context_strict
     else:
-        specific_message = prompt_no_domain_no_formation_v3_context
+        specific_message = prompt_v3_no_context
 
     model = OllamaLLM(
         base_url="http://localhost:11434",
@@ -155,9 +154,13 @@ async def on_message(message: cl.Message):
     need_context = int(need_context_str)
     print(type(need_context))
 
-    msg = await stream_response(
-        message, runnable, vectorstore if need_context == 1 else None
-    )  # type: cl.Message
+    if need_context == 1:
+        setup_model(need_context=True)  # pour changer le prompt
+        msg = await stream_response(message, runnable, vectorstore=vectorstore)
+    else:
+        msg = await stream_response(
+            message, runnable, vectorstore=None
+        )  # type: cl.Message
 
     # Update memory
     memory.chat_memory.add_user_message(message.content)
@@ -202,8 +205,7 @@ async def stream_response(
     ):
         await msg.stream_token(chunk)
 
-    if vectorstore is not None:
-        await msg.send()
+    await msg.send()
     return msg
 
 
@@ -244,5 +246,5 @@ async def on_chat_resume(thread: ThreadDict):
     cl.user_session.set("vectorstore", vectorstore)
 
     # mise en place du model+prompt (le runnable donc)
-    setup_model(domaine=None, formation=None)
+    setup_model()
     setup_multi_agent()

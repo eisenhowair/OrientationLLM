@@ -8,7 +8,7 @@ import chainlit as cl
 from ModelFactory import ModelFactory, BaseLanguageModel
 from prompt_warehouse import *
 from langchain.schema.runnable.config import RunnableConfig
-from vector_store_manager import *
+from vector_store_manager import VectorStoreFAISS
 
 """ 
 # LLaMA 3.1 Minitron 4B (NVIDIA) trop lourd, trop lent (30 minutes pour une question minimum)

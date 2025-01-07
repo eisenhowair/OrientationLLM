@@ -4,6 +4,7 @@ import pandas as pd
 from datetime import datetime
 from rich.console import Console
 from rich.table import Table
+
 from vector_store_manager import VectorStoreFAISS
 
 

@@ -10,7 +10,7 @@ from chainlit.types import ThreadDict
 from langchain.memory import ConversationBufferMemory
 from ensemble_model_gestion import EnsembleModelManager
 from typing import List, Dict, Optional
-from vector_store_manager import *
+from vector_store_manager import VectorStoreFAISS
 
 # Pour ajouter un modèle: le rajouter dans les available model de ensemble_model_gestion.py
 
