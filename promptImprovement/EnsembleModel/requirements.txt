@@ -8,6 +8,7 @@ langchain==0.3.4
 langchain-community==0.3.3
 langchain-core==0.3.13
 python-dotenv
+markdown # pour vectoriser des fichiers md
 
 # il faut des versions spécifiques de CUDA (sur windows)
 # pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 (si la machine est compatible)

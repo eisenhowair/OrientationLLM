@@ -131,19 +131,21 @@ def main():
             "chunk_overlap": 200,
         },
         {
-            "name": "nomic-embed-text",
-            "model": "ollama!nomic-embed-text",
-            # on met ollama! au début pour signaler qu'il faut le chercher sur OllamaEmbedding
-            "chunk_size": 1000,
-            "chunk_overlap": 200,
-        },
-        {
             "name": "Instructor L",
             "model": "hkunlp/instructor-large",
             "chunk_size": 1000,
             "chunk_overlap": 200,
         },
     ]
+    """
+        {
+            "name": "nomic-embed-text",
+            "model": "ollama!nomic-embed-text",
+            # on met ollama! au début pour signaler qu'il faut le chercher sur OllamaEmbedding
+            "chunk_size": 1000,
+            "chunk_overlap": 200,
+        },
+    """
 
     # Initialiser le comparateur
     comparator = EmbeddingComparator(

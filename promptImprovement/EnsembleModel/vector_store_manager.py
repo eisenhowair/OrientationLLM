@@ -1,9 +1,13 @@
 from typing import List, Dict, Union, Optional, Any
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_ollama import OllamaEmbeddings
-from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import WebBaseLoader, DirectoryLoader
+from langchain_community.document_loaders import (
+    WebBaseLoader,
+    DirectoryLoader,
+    TextLoader,
+    UnstructuredMarkdownLoader,
+)
+from langchain_ollama import OllamaEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.schema import Document
 from langchain_community.vectorstores import FAISS
 from langchain.schema.vectorstore import VectorStoreRetriever
@@ -85,9 +89,7 @@ class VectorStoreFAISS:
 
         try:
             self.index_faiss = FAISS.load_local(
-                str(
-                    self.index_path
-                ),  # Utiliser le chemin complet jusqu'au dossier 'index'
+                str(self.index_path),
                 self.embeddings,
                 allow_dangerous_deserialization=True,
                 index_name=self.embedding_model_name.split("/")[-1],
@@ -134,7 +136,6 @@ class VectorStoreFAISS:
 
         docs = []
 
-        # Traiter les fichiers CSV comme dans la première fonction
         for csv_file in csv_files:
             try:
                 # Lire le CSV avec pandas
@@ -159,10 +160,32 @@ class VectorStoreFAISS:
 
         # Traitement des autres types de fichiers avec DirectoryLoader
         other_patterns = ["*.json", "*.pdf", "*.txt"]
-        loaders = [
-            DirectoryLoader(directory_path, glob=pattern) for pattern in other_patterns
-        ]
+        try:
+            # Load .md files using TextLoader
+            md_files = glob.glob(os.path.join(directory_path, "*.md"))
+            md_documents = []
+            for file_path in md_files:
+                loader = TextLoader(file_path, encoding="utf-16le")
+                md_documents.extend(loader.load())  # Load documents from .md files
 
+            # Load other files using DirectoryLoader
+            other_documents = []
+            for pattern in other_patterns:
+                loader = DirectoryLoader(directory_path, glob=pattern)
+                other_documents.extend(
+                    loader.load()
+                )  # Load documents from other file types
+
+            # Combine all documents
+            documents = md_documents + other_documents
+            docs.extend(documents)
+
+            # Now `documents` contains all the loaded documents
+            print(f"Total documents loaded: {len(docs)}")
+
+        except Exception as e:
+            print(f"Erreur : {str(e)}")
+        """
         for loader in loaders:
             try:
                 new_docs = loader.load()
@@ -170,6 +193,7 @@ class VectorStoreFAISS:
                 docs.extend(new_docs)
             except Exception as e:
                 print(f"Error loading files with {loader}: {e}")
+        """
 
         if docs:
             print(f"Total documents to process: {len(docs)}")
