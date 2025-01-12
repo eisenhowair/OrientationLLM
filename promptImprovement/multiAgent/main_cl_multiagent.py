@@ -179,9 +179,10 @@ async def stream_rag_decider_response(
         },
         config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
     ):
-        await msg.stream_token(chunk)
-    await msg.send()
-
+        #await msg.stream_token(chunk)
+        msg.content += chunk
+    #await msg.send()
+    print(f"Besoin de contexte (1 Oui/2 Non):{msg.content}")
     return msg
 
 

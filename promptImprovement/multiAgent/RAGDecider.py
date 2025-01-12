@@ -52,7 +52,6 @@ class RAGDecider:
 
         # Exécution du runnable
         response = self.runnable.invoke(formatted_prompt)
-        print(f"Responseeee:{response}\n")
         return response
 
     def prepare_career_intent_classifier(model):  # à essayer
