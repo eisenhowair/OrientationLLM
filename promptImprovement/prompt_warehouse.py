@@ -190,6 +190,7 @@ Now, analyze the following user message:
 {input}
 
 """
+# prend de mauvaises décisions
 prompt_rag_decider2 = """
 You are a chatbot assistant analyzing French messages to determine if the user has expressed an interest or need to learn more about career options.
 
@@ -251,6 +252,8 @@ Message à analyser : {input}
 
 Réponse :
 """
+
+# pas assez poue que le modèle soit capable de comprendre le principe
 prompt_rag_decider_simple = """
 Message de l'utilisateur:
 {input}
