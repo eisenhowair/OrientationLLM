@@ -51,14 +51,6 @@ from vector_store_manager import VectorStoreFAISS
                     },
                 },
             },
-"""
-
-
-class EnsembleModelManager:
-    def __init__(self):
-        # modèles disponibles
-        self.available_models = {
-            # Modèles Ollama
             "llama3.1:8b-instruct-q4_1": {
                 "weight": 1.0,
                 "config": {
@@ -78,6 +70,33 @@ class EnsembleModelManager:
                 "config": {
                     "model_type": "ollama",
                     "model_name": "llama3.2:3b-instruct-q4_0",
+                },
+            },
+"""
+
+
+class EnsembleModelManager:
+    def __init__(self):
+        # modèles disponibles
+        self.available_models = {
+            "Phi-3.5-mini-instruct": {  # 3.8B
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "microsoft/Phi-3.5-mini-instruct",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
+                },
+            },
+            "EuroLLM-1.7B-Instruct": {
+                "weight": 1.0,
+                "config": {
+                    "model_type": "huggingface",
+                    "model_name": "utter-project/EuroLLM-1.7B-Instruct",
+                    "params": {
+                        "trust_remote_code": True,
+                    },
                 },
             },
         }

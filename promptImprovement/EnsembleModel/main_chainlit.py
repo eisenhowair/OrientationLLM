@@ -2,14 +2,24 @@ from langchain_ollama.llms import OllamaLLM
 from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
 from chainlit.input_widget import TextInput, Select
-from prompt_warehouse import *
-from prepare_prompt import *
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__name__))))
+
+from ..prompt_warehouse import (
+    prompt_v3_context,
+    prompt_v3_no_context,
+    prompt_v4_context,
+    prompt_v4_context_strict,
+)
 
 import chainlit as cl
 from chainlit.types import ThreadDict
 from langchain.memory import ConversationBufferMemory
 from ensemble_model_gestion import EnsembleModelManager
 from typing import List, Dict, Optional
+from dotenv import load_dotenv
 from vector_store_manager import VectorStoreFAISS
 
 # Pour ajouter un modèle: le rajouter dans les available model de ensemble_model_gestion.py
@@ -52,9 +62,17 @@ async def on_chat_start():
         generate_specific_message(None, None),
     )
 
+    load_dotenv()
+    ensemble_model_path = os.getenv("VECTORSTORE_INDEX_PATH")
+    if not ensemble_model_path:
+        raise ValueError(
+            "La variable d'environnement VECTORSTORE_INDEX_PATH n'est pas définie."
+        )
+
     # mise en place du RAG
     vectorstore = VectorStoreFAISS(
-        embedding_model_name="hkunlp/instructor-large", index_path="embedding_indexes"
+        embedding_model_name="hkunlp/instructor-large",
+        index_path=ensemble_model_path,  # "embedding_indexes"
     )
 
     cl.user_session.set("vectorstore", vectorstore)
@@ -111,7 +129,7 @@ def generate_specific_message(domaine: Optional[str], formation: Optional[str]) 
         return f"Ton rôle est de conseiller l'utilisateur sur les métiers du domaine {domaine}."
     elif formation:
         return f"L'utilisateur sort de la formation {formation}."
-    return prompt_no_domain_no_formation_v3
+    return prompt_v3_no_context
 
 
 @cl.on_message

@@ -4,6 +4,9 @@ import pandas as pd
 from datetime import datetime
 from rich.console import Console
 from rich.table import Table
+from dotenv import load_dotenv
+
+import os
 
 from vector_store_manager import VectorStoreFAISS
 
@@ -17,7 +20,7 @@ class EmbeddingComparator:
         self,
         data_dir: str,
         models_config: List[Dict[str, Any]],
-        index_base_path: str = "embedding_indexes",
+        index_base_path: str,
     ):
         """
         Initialise le comparateur.
@@ -29,7 +32,14 @@ class EmbeddingComparator:
         """
         self.data_dir = Path(data_dir)
         self.models_config = models_config
-        self.index_base_path = Path(index_base_path)
+
+        load_dotenv()
+        ensemble_model_path = os.getenv("VECTORSTORE_INDEX_PATH")
+        if not ensemble_model_path:
+            raise ValueError(
+                "La variable d'environnement VECTORSTORE_INDEX_PATH n'est pas définie."
+            )
+        self.index_base_path = Path(ensemble_model_path)
         self.vectorstores: Dict[str, VectorStoreFAISS] = {}
         self.console = Console()
 

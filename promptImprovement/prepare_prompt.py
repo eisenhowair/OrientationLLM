@@ -20,9 +20,11 @@ from langchain_huggingface import HuggingFacePipeline
 from langchain.chains import LLMChain
 
 
-def prepare_prompt_zero_shot(corps_prompt, model):
+def prepare_prompt_zero_shot(model):
 
     memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
+
+    corps_prompt = cl.user_session.get("corps_prompt")
 
     prompt_orientation = ChatPromptTemplate.from_messages(
         [
@@ -44,7 +46,9 @@ def prepare_prompt_zero_shot(corps_prompt, model):
     return runnable
 
 
-def prepare_prompt_few_shot(corps_prompt, model):
+def prepare_prompt_few_shot(model):
+
+    corps_prompt = cl.user_session.get("corps_prompt")
 
     memory = cl.user_session.get("memory")  # type: ConversationBufferMemory
     intro_few_shot = """

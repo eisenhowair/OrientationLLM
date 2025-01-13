@@ -21,6 +21,11 @@ import platform
 from transformers import TextStreamer
 from queue import Empty  # Importer Empty depuis le module queue
 
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
+
 
 class CustomTextStreamer(TextStreamer):
     def __init__(self, tokenizer, timeout: Optional[float] = None, **kwargs):
@@ -79,7 +84,6 @@ class OllamaModel(BaseLanguageModel):
         }
 
     def prepare_for_ensemble(self, few_shot) -> Runnable:
-        from prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
 
         model = self.get_model()
 
@@ -213,7 +217,6 @@ class HuggingFaceModel(BaseLanguageModel):
         }
 
     def prepare_for_ensemble(self, few_shot) -> Runnable:
-        from prepare_prompt import prepare_prompt_zero_shot, prepare_prompt_few_shot
 
         model = self.get_model()
 

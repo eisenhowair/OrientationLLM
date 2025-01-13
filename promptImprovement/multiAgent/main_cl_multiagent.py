@@ -117,6 +117,8 @@ def setup_model(need_context=False, nom_model=MODEL):
     else:
         specific_message = prompt_v3_no_context
 
+    cl.user_session.set("corps_prompt", specific_message)
+
     model = OllamaLLM(
         base_url="http://localhost:11434",
         model=nom_model,
@@ -124,7 +126,8 @@ def setup_model(need_context=False, nom_model=MODEL):
         num_ctx=32768,
         repeat_penalty=1.3,
     )
-    runnable = prepare_prompt_zero_shot(corps_prompt=specific_message, model=model)
+
+    runnable = prepare_prompt_zero_shot(model=model)
     cl.user_session.set("runnable", runnable)
     print("runnable dans la session")
     setup_multi_agent()
@@ -179,9 +182,9 @@ async def stream_rag_decider_response(
         },
         config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
     ):
-        #await msg.stream_token(chunk)
+        # await msg.stream_token(chunk)
         msg.content += chunk
-    #await msg.send()
+    # await msg.send()
     print(f"Besoin de contexte (1 Oui/2 Non):{msg.content}")
     return msg
 
