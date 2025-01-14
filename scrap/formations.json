@@ -1,0 +1,707 @@
+{
+    "0": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Carrières juridiques (CJ)",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Droit\nAdministration",
+        "Discipline(s)": "Droit, administration publique, propriété intellectuelle et industrielle",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "1": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Génie Biologique (GB) parcours Agronomie",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Agronomie, agroalimentaire, agriculture\nBio-industries, biotechnologies",
+        "Discipline(s)": "Agronomie, Agriculture",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "2": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Génie Electrique et Informatique Industrielle (GEII)",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Electronique, automatique, électrotechnique, génie électrique",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "3": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Génie Mécanique et Productique (GMP)",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Automobile, aéronautique, énergie, industrie, R&D",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "4": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Gestion des Entreprises et des Administrations (GEA)",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises",
+        "Discipline(s)": "Economie, gestion, management, marketing\nDroit, administration publique, propriété intellectuelle et industrielle",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "5": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Hygiène Sécurité Environnement (HSE)",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Risque et sécurité",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "6": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Management de la Logistique et des Transports (MLT)",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Transport, logistique",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "7": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Métiers de la transition et de l'efficacité énergétiques (MT2E)",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Energie, génie climatique et énergétique",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "8": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Métiers du Multimédia et de I'Internet (MMI)",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Information, communication, journalisme\nDéveloppement Web, programmation, numérique\nGraphisme, réseaux sociaux",
+        "Discipline(s)": "Communication, information, journalisme\nDéveloppement Web\nCréation numérique",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "9": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Réseaux et télécommunications (RT)",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Technologies de l'information, télécommunications, réseaux",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "10": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Science et Génie des Matériaux (SGM)",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Chimie, matériaux, plasturgie\nMétallurgie automobile, aéronautique, construction navale et ferroviaire,\nIndustrie cosmétique",
+        "Discipline(s)": "Physique, chimie, matériaux",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "11": {
+        "title": "Bachelor Universitaire de Technologie (B.U.T.) Techniques de Commercialisation (TC)",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "B.U.T.",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Commerce, vente, distribution",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "12": {
+        "title": "Licence Administration Economique et Sociale",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "13": {
+        "title": "Licence Droit",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Administration\nDroit",
+        "Discipline(s)": "Droit, administration publique, propriété intellectuelle et industrielle",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "14": {
+        "title": "Licence Electronique, Energie électrique et Automatique (EEA)",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Electronique, automatique, électrotechnique, génie électrique",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "15": {
+        "title": "Licence Gestion",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Licence",
+        "Nature": "Mention",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Commerce, vente, distribution\nGestion, comptabilité, management des entreprises",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "16": {
+        "title": "Licence Histoire",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "17": {
+        "title": "Licence informatique",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "18": {
+        "title": "Licence Langues Etrangères Appliquées",
+        "domain": "ARTS, LETTRES, LANGUES",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "19": {
+        "title": "Licence Langues, Littératures et Civilisations Etrangères et Régionales",
+        "domain": "ARTS, LETTRES, LANGUES",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "20": {
+        "title": "Licence Lettres",
+        "domain": "ARTS, LETTRES, LANGUES",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "21": {
+        "title": "Licence Mathématiques",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Enseignement, formation, éducation\nInformatique\nRecherche, recherche et développement",
+        "Discipline(s)": "Mathématiques et informatique",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "22": {
+        "title": "Licence Physique et Chimie",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "23": {
+        "title": "Licence Science Politique",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Administration\nInformation, communication, journalisme\nPolitique et société",
+        "Discipline(s)": "Communication, information, journalisme\nRelations internationales, études européennes, études régionales\nSciences politiques",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "24": {
+        "title": "Licence Sciences de l'Education et de la formation",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "25": {
+        "title": "Licence Sciences de la vie",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Agronomie, agroalimentaire, agriculture",
+        "Discipline(s)": "Agronomie, agroalimentaire, nutrition\nSciences de la vie et de la santé, psychologie",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "26": {
+        "title": "Licence Sciences et Techniques des Activités Physiques et Sportives (STAPS) - Activité physique adaptée - Santé",
+        "domain": "STAPS",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Enseignement, formation, éducation\nAction sociale, culturelle et sportive",
+        "Discipline(s)": "Sciences du sport",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "27": {
+        "title": "Licence Sciences Sociales",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Licence",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Administration\nPolitique et société",
+        "Discipline(s)": "Philosophie, éthique\nEconomie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "28": {
+        "title": "Licence professionnelle Bio-industries et bio-technologies",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Bio-industries, biotechnologies",
+        "Discipline(s)": "Sciences de la vie et de la santé, psychologie",
+        "Régime(s) d'études": "Formation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "29": {
+        "title": "Licence professionnelle Commercialisation des produits alimentaires",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Commerce, vente, distribution\nAgroalimentaire",
+        "Discipline(s)": "Economie, gestion, management, marketing\nOenologie",
+        "Régime(s) d'études": "Formation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "30": {
+        "title": "Licence professionnelle Gestion de Projets et Structures Artistiques et Culturels (GEPSAC)",
+        "domain": "ARTS, LETTRES, LANGUES",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Action sociale, culturelle et sportive\nArts, spectacles, culture",
+        "Discipline(s)": "Arts et design\nCommunication, information, journalisme\nEconomie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "31": {
+        "title": "Licence professionnelle Gestion des achats et des approvisionnements",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises\nTransport, logistique",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation\nFormation continue"
+    },
+    "32": {
+        "title": "Licence professionnelle Gestion et accompagnement de projets pédagogiques",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Enseignement, formation, éducation",
+        "Discipline(s)": "Education, formation des enseignants",
+        "Régime(s) d'études": "Formation continue"
+    },
+    "33": {
+        "title": "Licence professionnelle Management et Gestion des organisations (MGO)",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises",
+        "Régime(s) d'études": "Formation continue"
+    },
+    "34": {
+        "title": "Licence professionnelle Métiers de l’informatique : conception, développement et test de logiciels",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Informatique",
+        "Discipline(s)": "Mathématiques et informatique\nIngénierie et technologies",
+        "Régime(s) d'études": "Formation continue\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "35": {
+        "title": "Licence professionnelle Métiers du livre : édition et commerce du livre",
+        "domain": "ARTS, LETTRES, LANGUES",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Arts, spectacles, culture",
+        "Discipline(s)": "Communication, information, journalisme\nDocumentation, archives",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "36": {
+        "title": "Licence professionnelle Technico-commercial",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Commerce, vente, distribution",
+        "Discipline(s)": "Communication, information, journalisme",
+        "Régime(s) d'études": "Formation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "37": {
+        "title": "Licence professionnelle Valorisation des Agroressources",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Licence professionnelle",
+        "Niveau d'entrée": "BAC +2",
+        "Discipline(s)": "Agronomie, agroalimentaire, nutrition\nEnvironnement, viticulture, oenologie",
+        "Régime(s) d'études": "Formation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "38": {
+        "title": "Master Arts, lettres et civilisations ",
+        "domain": "ARTS, LETTRES, LANGUES",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Discipline(s)": "Lettres, langues, linguistique",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "39": {
+        "title": "Master Chimie",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Chimie, matériaux, plasturgie\nBio-industries, biotechnologies",
+        "Discipline(s)": "Physique, chimie, matériaux",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "40": {
+        "title": "Master Contrôle de Gestion et Audit Organisationnel",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "41": {
+        "title": "Master Droit",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Droit\nAdministration\nJustice\nRessources humaines",
+        "Discipline(s)": "Droit, administration publique, propriété intellectuelle et industrielle",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "42": {
+        "title": "Master Economie sociale et solidaire (ESS)",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Action sociale, culturelle et sportive",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "43": {
+        "title": "Master Electronique, Energie électrique, Automatique",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Electronique, automatique, électrotechnique, génie électrique",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "44": {
+        "title": "Master Entrepreneuriat et Management de projet",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises\nTransport, logistique",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation en apprentissage\nFormation en contrat de professionnalisation\nFormation continue"
+    },
+    "45": {
+        "title": "Master Histoire, civilisations et patrimoine",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Arts, spectacles, culture\nInformation, documentation, édition\nRecherche, recherche et développement",
+        "Discipline(s)": "Histoire/civilisation\nDocumentation, archives",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "46": {
+        "title": "Master Information et Communication",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Information, communication, journalisme",
+        "Discipline(s)": "Communication, information, journalisme",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "47": {
+        "title": "Master informatique",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Informatique\nPlateformes mobiles, Big Data, Cloud Computing, Intelligence artificielle",
+        "Discipline(s)": "Mathématiques et informatique",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "48": {
+        "title": "Master Innovation, Entreprise et Société",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "49": {
+        "title": "Master Langues Etrangères Appliquées",
+        "domain": "ARTS, LETTRES, LANGUES, DROIT, ÉCONOMIE, GESTION, SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Discipline(s)": "Lettres, langues, linguistique",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "50": {
+        "title": "Master Management Sectoriel",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +4",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises\nAdministration",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation en apprentissage\nFormation continue\nFormation en contrat de professionnalisation"
+    },
+    "51": {
+        "title": "Master Marketing et Vente",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Commerce, vente, distribution",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "52": {
+        "title": "Master Mathématiques et Applications",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Recherche, recherche et développement",
+        "Discipline(s)": "Mathématiques et informatique",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "53": {
+        "title": "Master Mécanique",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Mécanique, génie mécanique, mécatronique",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "54": {
+        "title": "Master Méthodes Informatiques Appliquées à la Gestion des Entreprises - MIAGE",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Discipline(s)": "Economie, gestion, management, marketing\nMathématiques et informatique",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "55": {
+        "title": "Master Métiers de l'Enseignement, de l'Education et de la Formation",
+        "domain": "MEEF",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Discipline(s)": "Education, formation des enseignants",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "56": {
+        "title": "Master Muséologie muséo-expographie",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Information, communication, journalisme\nArts, spectacles, culture",
+        "Discipline(s)": "Histoire/civilisation\nCommunication, information, journalisme",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "57": {
+        "title": "Master Risques et Environnement",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +5",
+        "Secteur(s) d'activité": "Eau, environnement, aménagement, urbanisme\nRisque et sécurité",
+        "Discipline(s)": "Sciences de la terre et de l'univers, environnement",
+        "Régime(s) d'études": "Formation initiale\nFormation continue\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "58": {
+        "title": "Master Sciences de l'Education et de la formation",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Régime(s) d'études": "Formation initiale\nFormation continue"
+    },
+    "59": {
+        "title": "Master Sciences et génie des matériaux",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Chimie, matériaux, plasturgie",
+        "Discipline(s)": "Physique, chimie, matériaux",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "60": {
+        "title": "Master Sciences et technologies de l'agriculture, de l'alimentation et de l'environnement",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Master",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Agronomie, Agriculture, Environnement",
+        "Discipline(s)": "Agronomie, agroalimentaire, nutrition\nEnvironnement, viticulture, oenologie",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "61": {
+        "title": "Doctorat",
+        "domain": "ARTS, LETTRES, LANGUES, DROIT, ÉCONOMIE, GESTION, SCIENCES HUMAINES ET SOCIALES, SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Doctorat d'université",
+        "Niveau d'entrée": "BAC +5",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "62": {
+        "title": "Cycle Post BAC intégré ENSCMu-Groupe INSA",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'ingénieur & cycle post-bac intégré",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Chimie, matériaux, plasturgie\nRecherche, recherche et développement",
+        "Discipline(s)": "Physique, chimie, matériaux\nIngénierie et technologies",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "63": {
+        "title": "Cycle Post-BAC intégré ENSISA-Groupe INSA",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'ingénieur & cycle post-bac intégré",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "64": {
+        "title": "Diplôme d'ingénieur chimiste",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'ingénieur & cycle post-bac intégré",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Chimie, matériaux, plasturgie",
+        "Discipline(s)": "Physique, chimie, matériaux\nIngénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "65": {
+        "title": "Diplôme d'Ingénieur en Automatique & systèmes Embarqués",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'ingénieur & cycle post-bac intégré",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Electronique, automatique, électrotechnique, génie électrique",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en contrat de professionnalisation"
+    },
+    "66": {
+        "title": "Diplôme d'ingénieur en Génie industriel",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'ingénieur & cycle post-bac intégré",
+        "Niveau d'entrée": "BAC +2",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation en contrat de professionnalisation\nFormation en apprentissage\nFormation initiale"
+    },
+    "67": {
+        "title": "Diplôme d'ingénieur en Informatique & réseaux",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'ingénieur & cycle post-bac intégré",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Informatique\nTechnologies de l'information, télécommunications, réseaux",
+        "Discipline(s)": "Mathématiques et informatique\nIngénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "68": {
+        "title": "Diplôme d'ingénieur en Mécanique",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'ingénieur & cycle post-bac intégré",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Mécanique, génie mécanique, mécatronique",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en contrat de professionnalisation"
+    },
+    "69": {
+        "title": "Diplôme d'ingénieur en Textile & fibres",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'ingénieur & cycle post-bac intégré",
+        "Niveau d'entrée": "BAC +2",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en contrat de professionnalisation"
+    },
+    "70": {
+        "title": "Diplôme d'Université (DU) Etudes Helvétiques",
+        "domain": "ARTS, LETTRES, LANGUES",
+        "Diplôme": "Diplôme d'université 1er cycle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Arts, spectacles, culture",
+        "Discipline(s)": "Lettres, langues, linguistique",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "71": {
+        "title": "Diplôme d'Université (DU) Informatique UHA 4.0.1-4.0.2 - 4.0.3",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'université 1er cycle",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Informatique",
+        "Discipline(s)": "Ingénierie et technologies\nMathématiques et informatique",
+        "Régime(s) d'études": "Formation initiale\nFormation continue"
+    },
+    "72": {
+        "title": "Diplôme d'Université (DU) Informatique UHA 4.0.4 - 4.0.5",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'université 2ème cycle",
+        "Niveau d'entrée": "BAC +3",
+        "Secteur(s) d'activité": "Informatique",
+        "Discipline(s)": "Mathématiques et informatique\nIngénierie et technologies",
+        "Régime(s) d'études": "Formation continue\nFormation initiale"
+    },
+    "73": {
+        "title": "Diplôme d'Université (DU) Métiers de l'enseignement et de la formation",
+        "domain": "SCIENCES HUMAINES ET SOCIALES",
+        "Diplôme": "Diplôme d'université 1er cycle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Enseignement, formation, éducation",
+        "Discipline(s)": "Education, formation des enseignants",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "74": {
+        "title": "Diplôme d'Université (DU) Prépa Talents du service public",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Diplôme d'université 1er cycle",
+        "Niveau d'entrée": "BAC +2",
+        "Secteur(s) d'activité": "Administration",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "75": {
+        "title": "Diplôme d'Université (DU) Production et commercialisation brassicoles, biérologie",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'université 1er cycle",
+        "Niveau d'entrée": "Baccalauréat ou équivalent\nBAC +2",
+        "Secteur(s) d'activité": "Agronomie, Agroalimentaire\nBio-industries, biotechnologies",
+        "Discipline(s)": "Agronomie, Agriculture",
+        "Régime(s) d'études": "Formation continue"
+    },
+    "76": {
+        "title": "Diplôme d'Université (DU) Supérieur de Comptabilité et de Gestion",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Diplôme d'université 2ème cycle",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation en apprentissage\nFormation en contrat de professionnalisation"
+    },
+    "77": {
+        "title": "Diplôme d'Université en Etudes Marketing et Recherche",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Diplôme d'université 2ème cycle",
+        "Niveau d'entrée": "BAC +5",
+        "Secteur(s) d'activité": "Gestion, comptabilité, management des entreprises\nCommerce, vente, distribution",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "78": {
+        "title": "Diplôme d'Université Sport Business parcours E-sport and gaming",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Diplôme d'université 1er cycle",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Discipline(s)": "Economie, gestion, management, marketing",
+        "Régime(s) d'études": "Formation initiale"
+    },
+    "79": {
+        "title": "Diplôme d'Université Sport Business parcours Management et Marketing du Sport",
+        "domain": "DROIT, ÉCONOMIE, GESTION",
+        "Diplôme": "Diplôme d'université 1er cycle",
+        "Niveau d'entrée": "Baccalauréat ou équivalent",
+        "Secteur(s) d'activité": "Commerce, vente, distribution",
+        "Discipline(s)": "Economie, gestion, management, marketing"
+    },
+    "80": {
+        "title": "Mastère Spécialisé CGE (Conférence des Grandes Ecoles) Ingénierie Textile",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'université 3ème cycle",
+        "Niveau d'entrée": "BAC +5",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation initiale\nFormation en contrat de professionnalisation"
+    },
+    "81": {
+        "title": "Mastère spécialisé Gestion des Risques et Menaces N.R.B.C.E.",
+        "domain": "SCIENCES, TECHNOLOGIES, SANTÉ",
+        "Diplôme": "Diplôme d'université 3ème cycle",
+        "Niveau d'entrée": "BAC +5",
+        "Secteur(s) d'activité": "Chimie, matériaux, plasturgie\nRisque et sécurité",
+        "Discipline(s)": "Ingénierie et technologies",
+        "Régime(s) d'études": "Formation continue"
+    }
+}
