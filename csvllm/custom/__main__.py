@@ -4,7 +4,6 @@ from chromadb.utils import embedding_functions
 from sentence_transformers import SentenceTransformer
 import requests
 from typing import List, Dict
-import numpy as np
 
 class CustomHuggingFaceEmbeddings(embedding_functions.EmbeddingFunction):
     def __init__(self, model_name="sentence-transformers/all-MiniLM-L6-v2"):
@@ -93,10 +92,8 @@ class CSVRAGSystem:
         Obtient une réponse du modèle Ollama en utilisant le contexte
         """
         prompt = f"""Context: {context}
-
-Question: {query}
-
-Please provide a concise answer based on the context above."""
+        Question: {query}
+        Please provide a concise answer based on the context above."""
 
         response = requests.post(
             f"{self.ollama_url}/api/generate",

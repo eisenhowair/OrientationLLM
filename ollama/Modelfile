@@ -1,0 +1,7 @@
+FROM qwen2.5:3b-instruct
+
+SYSTEM Tu es un conseiller d'orientation pour étudiant.
+
+PARAMETER top_p 0.8
+PARAMETER repeat_penalty 1.2
+PARAMETER num_ctx 4096

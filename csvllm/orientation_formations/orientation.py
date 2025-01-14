@@ -16,11 +16,10 @@ import pickle
 class OrientationCriteria(BaseModel):
     diplome: str
     domaine_interet: str
-    type_formation: str
     user_query: Optional[str] = None
 
 class OrientationChatbot:
-    def __init__(self, model_name: str = "qwen2.5:7b", base_url: str = "http://localhost:11434", vector_store_dir: str = "vector_store"):
+    def __init__(self, model_name: str = "myqwen:latest", base_url: str = "http://localhost:11434", vector_store_dir: str = "vectorstores"):
         self.llm = OllamaLLM(model=model_name, base_url=base_url)
         self.embeddings = HuggingFaceEmbeddings(
             model_name="sentence-transformers/all-MiniLM-L6-v2"
@@ -160,7 +159,7 @@ class OrientationChatbot:
     def process_orientation(self, criteria: OrientationCriteria) -> str:
         """Traite une demande d'orientation avec filtrage"""
         #Construction de la requête sous forme de mots clés
-        keys_criteria_query = f"{criteria.diplome} {criteria.domaine_interet} {criteria.type_formation}".strip()
+        keys_criteria_query = f"{criteria.diplome} {criteria.domaine_interet}".strip()
 
         #documents pertinents
         retriever = self.vector_store.as_retriever()
@@ -176,11 +175,12 @@ class OrientationChatbot:
         str_criteria_action = f"Liste et décris les formations trouvées qui correspondent aux critères suivants : "
         str_criteria=  (f"diplome {criteria.diplome}, "
             f"domaine {criteria.domaine_interet}"
-            + (f", type {criteria.type_formation}" if criteria.type_formation else "")
             + f"\nContexte :\n"
             f"{context}")
         
         if criteria.user_query:
+            print("USER QUERY")
+
             str_questions_action = f"Réponds à la question en prenant en compte les critères."
             str_questions = (f"Question :\n"
                             f"{criteria.user_query}")
@@ -189,6 +189,7 @@ class OrientationChatbot:
                 "input": f"{str_questions_action}{str_criteria}{str_questions}"
             })
         else:
+            print("NO USER QUERY")
             response = self.rag_chain.invoke({
                 "input": f"{str_criteria_action}{str_criteria}"
             })
@@ -206,7 +207,6 @@ def main():
     criteria = OrientationCriteria(
         diplome="master",
         domaine_interet="informatique",
-        type_formation=""
     )
     
     result = chatbot.process_orientation(criteria)

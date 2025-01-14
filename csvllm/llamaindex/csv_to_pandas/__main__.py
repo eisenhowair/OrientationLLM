@@ -5,9 +5,7 @@ from llama_index.query_pipeline import (
 )
 from llama_index.query_engine.pandas import PandasInstructionParser
 from llama_index.prompts import PromptTemplate
-
 from llama_index.llms import Ollama
-
 import pandas as pd
 
 df = pd.read_csv("../../../formations/formations.csv")
@@ -126,7 +124,7 @@ pandas_prompt = PromptTemplate(pandas_prompt_str).partial_format(
 pandas_output_parser = PandasInstructionParser(df)
 response_synthesis_prompt = PromptTemplate(response_synthesis_prompt_str)
 
-llm = Ollama(model="qwen2.5:7b",
+llm = Ollama(model="qwen2.5:3b-instruct",
              temperature=0, 
              request_timeout=120.0,
              )
@@ -161,7 +159,7 @@ qp.add_link("response_synthesis_prompt", "llm2")
 
 
 response = qp.run(
-    query_str="Je cherche une licence informatique",
+    query_str="",
 )
 
 print(response.message.content)
