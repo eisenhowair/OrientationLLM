@@ -8,7 +8,7 @@ from llama_index.prompts import PromptTemplate
 from llama_index.llms import Ollama
 import pandas as pd
 
-df = pd.read_csv("../../../formations/formations.csv")
+df = pd.read_csv("../../formations/formations.csv")
 
 
 instruction_str = (

@@ -33,7 +33,7 @@ class OrientationChatbot:
 
         os.makedirs(vector_store_dir, exist_ok=True)
 
-    def load_data(self, file_path: str, force_rebuild: bool = False):
+    def load_data(self, file_path: str = "../../formations/formations.csv", force_rebuild: bool = False):
         """Charge les données depuis le CSV avec option de charger depuis le stockage local"""
         self.df = pd.read_csv(file_path)
         
@@ -195,23 +195,3 @@ class OrientationChatbot:
             })
 
         return response["answer"]
-
-def main():
-    chatbot = OrientationChatbot(vector_store_dir="vector_store")
-    
-    chatbot.load_data('../../../formations/formations.csv')
-    #To force rebuild the vector store:
-    # chatbot.load_data('../../../formations/formations.csv', force_rebuild=True)
-    
-    #Test avec des critères spécifiques
-    criteria = OrientationCriteria(
-        diplome="master",
-        domaine_interet="informatique",
-    )
-    
-    result = chatbot.process_orientation(criteria)
-    print("\nRésultat de la recherche:")
-    print(result)
-
-if __name__ == "__main__":
-    main()

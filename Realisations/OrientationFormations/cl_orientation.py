@@ -9,8 +9,8 @@ initial_questions_done = False
 async def start():
     global chatbot, initial_questions_done, user_responses
 
-    chatbot = OrientationChatbot(vector_store_dir="vector_store")
-    chatbot.load_data('../../../formations/formations.csv')
+    chatbot = OrientationChatbot()
+    chatbot.load_data()
 
     try:
         await cl.Message(content="Bonjour, je suis là pour vous aider à trouver la formation qui vous correspond ! Commençons par quelques questions ...").send()
