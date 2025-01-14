@@ -1,0 +1,11 @@
+#python=3.9
+
+pandas
+faiss_cpu==1.9.0.post1
+langchain==0.3.14
+langchain_community==0.3.14
+langchain_huggingface==0.1.2
+langchain_ollama==0.2.2
+sentence_transformers==3.3.1
+pydantic==2.10.5
+chainlit==2.0.1
