@@ -70,7 +70,7 @@ Les impl√©mentations se trouve dans le dossier Realisation. Chaque dossier repr√
 | [/multiAgent](https://github.com/eisenhowair/OrientationLLM/tree/main/Realisations/multiAgent) | Chatbot |
 | [/OrientationFormations ](https://github.com/eisenhowair/OrientationLLM/tree/main/Realisations/OrientationFormations ) | Chatbot |
 | [/scraping](https://github.com/eisenhowair/OrientationLLM/tree/main/Realisations/scraping) | Scraping des formations UHA |
-| [/experimentations  ](https://github.com/eisenhowair/OrientationLLM/tree/main/experimentations) | Testes  |
+| [/experimentations  ](https://github.com/eisenhowair/OrientationLLM/tree/main/experimentations) | Tests  |
 
 ## Contacts
 
