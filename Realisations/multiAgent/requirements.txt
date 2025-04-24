@@ -1,7 +1,7 @@
 setuptools==75.2.0
 wheel==0.44.0
 transformers==4.48
-torch==2.4.1
+torch==2.7.0
 langchain==0.2.16
 langchain-community==0.3.3
 chainlit==1.1.402
